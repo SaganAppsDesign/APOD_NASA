@@ -1,43 +1,28 @@
-package com.example.reccyclerview
+package com.example.apod
 
 import android.annotation.SuppressLint
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.inputmethod.InputMethodManager
-import android.widget.SearchView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.reccyclerview.databinding.ActivityMainBinding
+import com.example.apod.databinding.ActivityMainBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-var superHeros: List<SuperHero> = listOf(
-
-
-    SuperHero("Batman", "Marvel", "Bruce Wayne", "https://image.api.playstation.com/vulcan/img/rnd/202010/2621/H9v5o8vP6RKkQtR77LIGrGDE.png"),
-    SuperHero("Spiderman", "Marvel", "Peter Parker", "https://www.muycomputer.com/wp-content/uploads/2021/08/Spider-Man.jpg"),
-    SuperHero("Superman", "Marvel", "Clark Kent", "https://imagenes.20minutos.es/files/image_656_370/files/fp/uploads/imagenes/2021/07/06/christopher-reeve-en-superman-richard-donner-1978.r_d.816-319.jpeg"),
-    SuperHero("Batman", "Marvel", "Bruce Wayne", "https://image.api.playstation.com/vulcan/img/rnd/202010/2621/H9v5o8vP6RKkQtR77LIGrGDE.png"),
-    SuperHero("Spiderman", "Marvel", "Peter Parker", "https://www.muycomputer.com/wp-content/uploads/2021/08/Spider-Man.jpg"),
-    SuperHero("Superman", "Marvel", "Clark Kent", "https://imagenes.20minutos.es/files/image_656_370/files/fp/uploads/imagenes/2021/07/06/christopher-reeve-en-superman-richard-donner-1978.r_d.816-319.jpeg"),
-    SuperHero("Batman", "Marvel", "Bruce Wayne", "https://image.api.playstation.com/vulcan/img/rnd/202010/2621/H9v5o8vP6RKkQtR77LIGrGDE.png"),
-    SuperHero("Spiderman", "Marvel", "Peter Parker", "https://www.muycomputer.com/wp-content/uploads/2021/08/Spider-Man.jpg"),
-    SuperHero("Superman", "Marvel", "Clark Kent", "https://imagenes.20minutos.es/files/image_656_370/files/fp/uploads/imagenes/2021/07/06/christopher-reeve-en-superman-richard-donner-1978.r_d.816-319.jpeg"),
-    SuperHero("Batman", "Marvel", "Bruce Wayne", "https://image.api.playstation.com/vulcan/img/rnd/202010/2621/H9v5o8vP6RKkQtR77LIGrGDE.png"),
-    SuperHero("Spiderman", "Marvel", "Peter Parker", "https://www.muycomputer.com/wp-content/uploads/2021/08/Spider-Man.jpg"),
-    SuperHero("Superman", "Marvel", "Clark Kent", "https://imagenes.20minutos.es/files/image_656_370/files/fp/uploads/imagenes/2021/07/06/christopher-reeve-en-superman-richard-donner-1978.r_d.816-319.jpeg")
-)
-
-
 class MainActivity : AppCompatActivity(), androidx.appcompat.widget.SearchView.OnQueryTextListener {
 
     private lateinit var binding : ActivityMainBinding
-    private lateinit var adapter: DogAdapter
-    private val dogImages = mutableListOf<String>()
+    private lateinit var adapter: APODAdapter
+    private val apodImages = mutableListOf<String?>()
+    private val apodTitle = mutableListOf<String?>()
+    private val apodImagesCount = mutableListOf<APODResponse?>()
+    private val apiKey = "TCx9Wm5GIDBfk6tl5QlGA9Vf1fc7jU48f3SA7fcq"
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,28 +31,20 @@ class MainActivity : AppCompatActivity(), androidx.appcompat.widget.SearchView.O
         setContentView(binding.root)
         binding.svDogs.setOnQueryTextListener(this)
         initRecycler()
-
-
     }
 
-    fun initRecycler(){
-
-        adapter = DogAdapter(dogImages)
-        binding.rvDogs.layoutManager = LinearLayoutManager (this)
-        binding.rvDogs.adapter = adapter
-
+    private fun initRecycler(){
+        adapter = APODAdapter(apodImages, apodTitle)
+        binding.rvAPODs.layoutManager = LinearLayoutManager (this)
+        binding.rvAPODs.adapter = adapter
     }
 
-
-// Esta instancia de Retrofit que vamos a crear será la que tenga el resto de la url del endpoint, se encargará de convertir
-// el JSON a DogResponse y tendrá toda la configuración para hacer la llamada del API.
     private fun getRetrofit():Retrofit{
         return Retrofit.Builder()
-            .baseUrl("https://dog.ceo/api/breed/")
+            .baseUrl("https://api.nasa.gov/planetary/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
-
 
     private fun showError() {
         Toast.makeText(this, "Ha ocurrido un error", Toast.LENGTH_SHORT).show()
@@ -77,18 +54,20 @@ class MainActivity : AppCompatActivity(), androidx.appcompat.widget.SearchView.O
 //Lo primero que hacemos dentro del método es llamar a CoroutineScope(Dispatchers.IO).launch{}
 // esto hará que all lo que esté dentro de esas llaves de genere en un hilo asíncrono.
     @SuppressLint("NotifyDataSetChanged")
-    private fun searchByName(query:String){
+    private fun searchByDate(query:String){
         //T0d0 lo lanzado aquí se realiza en un hilo secundario
         CoroutineScope(Dispatchers.IO).launch {
-            val call = getRetrofit().create(APIService::class.java).getDogsByBreeds("$query/images")
-            val puppies = call.body()
-            //Para poder salir de esa corrutina utilizaremos runOnUiThread{} y all lo que esté entre esas llaves se hará en el hilo principal aunque esté dentro de una corrutina.
+            val call = getRetrofit().create(APIService::class.java).getAPODByDate("apod?api_key=$apiKey&date=$query&concept_tags=True")
+            val apod = call.body()
+            //Para poder salir de esa corrutina utilizaremos runOnUiThread{} y all lo que esté entre esas llaves se hará en el hilo principal
+            // aunque esté dentro de una corrutina.
             runOnUiThread {
                 if (call.isSuccessful) {
-                    val images = puppies?.images ?: emptyList()
-                    dogImages.clear()
-                    dogImages.addAll(images)
+                    val images = mutableListOf(apod?.url)
+                    apodImages.clear()
+                    apodImages.addAll(images)
                     adapter.notifyDataSetChanged()
+
                 } else {
                     showError()
                 }
@@ -97,6 +76,29 @@ class MainActivity : AppCompatActivity(), androidx.appcompat.widget.SearchView.O
         }
         }
 
+    @SuppressLint("NotifyDataSetChanged")
+    private fun searchByCount(query:String){
+        //T0d0 lo lanzado aquí se realiza en un hilo secundario
+        CoroutineScope(Dispatchers.IO).launch {
+            val call = getRetrofit().create(APIService::class.java).getAPODByCount("apod?api_key=$apiKey&count=$query")
+            val apod = call.body()
+            runOnUiThread {
+                if (call.isSuccessful) {
+                    apodImages.clear()
+                    apodTitle.clear()
+                    for(i in 0 until apod?.size!!){
+                       apodImages.addAll(mutableListOf(apod[i].url))
+                       apodTitle.addAll(mutableListOf(apod[i].title))
+                    }
+                    adapter.notifyDataSetChanged()
+                } else {
+                    showError()
+                }
+                hideKeyboard()
+            }
+        }
+    }
+
     private fun hideKeyboard() {
         val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(binding.viewRoot.windowToken, 0)
@@ -104,17 +106,14 @@ class MainActivity : AppCompatActivity(), androidx.appcompat.widget.SearchView.O
 
     override fun onQueryTextSubmit(query: String?): Boolean {
         if(!query.isNullOrEmpty()){
-            searchByName(query.lowercase())
+            searchByCount(query)
         }
         return true
     }
 
     override fun onQueryTextChange(newText: String?): Boolean {
         return true
-
     }
-
-
 }
 
 

@@ -7,8 +7,18 @@
     android:layout_margin="16dp"
     android:layout_height="320dp">
     <ImageView
-        android:id="@+id/ivDog"
+        android:id="@+id/ivApod"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop"/>
+        android:scaleType="centerCrop"
+        android:contentDescription="TODO" />
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:padding="10dp"
+        android:textColor="@color/white"
+        android:text="Title"/>
 </androidx.cardview.widget.CardView>
