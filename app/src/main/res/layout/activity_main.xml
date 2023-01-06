@@ -3,15 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/viewRoot"
+    android:background="@color/black"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.apod.MainActivity">
+    tools:context="com.example.apod.ui.view.activities.MainActivity">
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/svDogs"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:background="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/rvAPODs"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"

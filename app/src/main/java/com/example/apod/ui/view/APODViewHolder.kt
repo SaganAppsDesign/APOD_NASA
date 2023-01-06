@@ -1,9 +1,11 @@
-package com.example.apod
+package com.example.apod.ui.view
 
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.apod.R
+import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
 
 class APODViewHolder(view: View): RecyclerView.ViewHolder(view) {
@@ -14,4 +16,13 @@ class APODViewHolder(view: View): RecyclerView.ViewHolder(view) {
         Picasso.get().load(image).into(binding)
         tvTitle.text = title
      }
+    init {
+        itemView.setOnClickListener { v: View  ->
+           Snackbar.make(v, "Título ${tvTitle.text}", Snackbar.LENGTH_LONG).setAction("Action", null).show()
+//            passData(title.text.toString(), description, date.text.toString(), copyright.text.toString(), imageString, mediaType)
+        }
+    }
+
+
+
 }

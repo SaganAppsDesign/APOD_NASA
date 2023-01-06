@@ -1,7 +1,8 @@
-package com.example.apod
+package com.example.apod.ui.view
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.apod.R
 
 class APODAdapter(private val images: MutableList<String?>, private val titles: MutableList<String?>)
     : RecyclerView.Adapter<APODViewHolder>(){
@@ -17,6 +18,5 @@ class APODAdapter(private val images: MutableList<String?>, private val titles: 
     }
 
     override fun getItemCount(): Int = images.size
-
 
 }

@@ -1,5 +1,6 @@
-package com.example.apod
+package com.example.apod.data.network
 
+import com.example.apod.data.model.APODResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Url
