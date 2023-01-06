@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="180dp"
+    android:orientation="horizontal"
+    android:layout_marginTop="0dp"
+    android:padding="10dp"
+    >
+
+    <androidx.cardview.widget.CardView
+
+        android:id="@+id/card_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        card_view:cardBackgroundColor="#FFC107"
+        card_view:cardCornerRadius="10dp"
+        card_view:cardElevation="10dp"
+        card_view:cardMaxElevation="12dp"
+
+        card_view:layout_constraintBottom_toBottomOf="parent"
+        card_view:layout_constraintEnd_toEndOf="parent"
+        card_view:layout_constraintStart_toStartOf="parent"
+        card_view:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/ivHero"
+            android:layout_width="168dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="10sp" />
+
+        <LinearLayout
+            android:layout_width="198dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:orientation="vertical"
+            android:padding="0sp">
+
+            <TextView
+                android:id="@+id/tvRealName"
+                style="@style/rvText_style"
+                android:layout_marginTop="20dp"
+                tools:text="Peter Parker" />
+
+            <TextView
+                android:id="@+id/tvHeroName"
+                style="@style/rvText_style"
+                android:textColor="#FF5722"
+                android:textSize="12dp"
+                tools:text="Spiderman" />
+
+            <TextView
+                android:id="@+id/tvPublisher"
+                style="@style/rvText_style"
+                android:textColor="#2196F3"
+                android:textSize="10dp"
+                tools:text="Marvel" />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
