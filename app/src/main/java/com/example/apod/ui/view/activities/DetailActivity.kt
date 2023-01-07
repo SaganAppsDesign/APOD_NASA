@@ -1,9 +1,9 @@
 package com.example.apod.ui.view.activities
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.example.apod.databinding.ActivityDetailBinding
-import com.example.apod.databinding.ActivityMainBinding
+import com.squareup.picasso.Picasso
 
 class DetailActivity : AppCompatActivity() {
     private lateinit var binding : ActivityDetailBinding
@@ -13,6 +13,14 @@ class DetailActivity : AppCompatActivity() {
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val intent = intent
+        val title = intent.getStringExtra("title")
+        val image = intent.getStringExtra("image")
+        val description = intent.getStringExtra("description")
+
+        binding.tvTitle.text = title
+        binding.tvDescription.text = description
+        Picasso.get().load(image).into(binding.ivImage)
 
     }
 }

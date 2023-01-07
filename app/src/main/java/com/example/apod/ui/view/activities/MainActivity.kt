@@ -21,6 +21,7 @@ class MainActivity : AppCompatActivity(), androidx.appcompat.widget.SearchView.O
     private lateinit var adapter: APODAdapter
     private val apodImages = mutableListOf<String?>()
     private val apodTitle = mutableListOf<String?>()
+    private val apodDescrip = mutableListOf<String?>()
     private val apiKey = "TCx9Wm5GIDBfk6tl5QlGA9Vf1fc7jU48f3SA7fcq"
 
 
@@ -34,7 +35,7 @@ class MainActivity : AppCompatActivity(), androidx.appcompat.widget.SearchView.O
     }
 
     private fun initRecycler(){
-        adapter = APODAdapter(apodImages, apodTitle)
+        adapter = APODAdapter(this, apodImages, apodTitle, apodDescrip)
         binding.rvAPODs.layoutManager = LinearLayoutManager (this)
         binding.rvAPODs.adapter = adapter
     }
@@ -75,9 +76,11 @@ class MainActivity : AppCompatActivity(), androidx.appcompat.widget.SearchView.O
                 if (call.isSuccessful) {
                     apodImages.clear()
                     apodTitle.clear()
+                    apodDescrip.clear()
                     for(i in 0 until apod?.size!!){
                        apodImages.addAll(mutableListOf(apod[i].url))
                        apodTitle.addAll(mutableListOf(apod[i].title))
+                       apodDescrip.addAll(mutableListOf(apod[i].explanation))
                     }
                     adapter.notifyDataSetChanged()
                 } else {
