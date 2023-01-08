@@ -15,7 +15,8 @@
         android:theme="@style/Theme.APOD">
         <activity
             android:name=".ui.view.activities.DetailActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.view.activities.MainActivity"
             android:exported="true"

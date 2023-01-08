@@ -1,4 +1,4 @@
-package com.example.apod.ui.view
+package com.example.apod.ui.view.recyclerview
 
 import android.content.Context
 import android.view.LayoutInflater

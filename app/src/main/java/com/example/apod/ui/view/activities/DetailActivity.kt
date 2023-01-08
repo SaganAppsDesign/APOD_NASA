@@ -1,11 +1,9 @@
 package com.example.apod.ui.view.activities
 
-import Constants.YOUTUBE_API_KEY
+import com.example.apod.Constants.YOUTUBE_API_KEY
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import com.example.apod.databinding.ActivityDetailBinding
 import com.google.android.youtube.player.YouTubeBaseActivity
 import com.google.android.youtube.player.YouTubeInitializationResult

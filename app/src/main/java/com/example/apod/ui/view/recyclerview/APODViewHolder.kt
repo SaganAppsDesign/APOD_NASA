@@ -1,15 +1,13 @@
-package com.example.apod.ui.view
+package com.example.apod.ui.view.recyclerview
 
 import android.content.Context
 import android.content.Intent
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.apod.R
 import com.example.apod.ui.view.activities.DetailActivity
-import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
 
 class APODViewHolder(view: View): RecyclerView.ViewHolder(view) {
@@ -26,12 +24,11 @@ class APODViewHolder(view: View): RecyclerView.ViewHolder(view) {
              mediaType: String?,
              context: Context){
 
-        if (mediaType=="video"){
+        if (mediaType == "video"){
             Picasso.get().load(R.drawable.apod).into(ivAPOD)
-        } else {
-            Picasso.get().load(image).into(ivAPOD)
-        }
-        Picasso.get().load(image).into(ivAPOD)
+            ivAPOD.scaleType = ImageView.ScaleType.CENTER
+           } else Picasso.get().load(image).into(ivAPOD)
+
         tvTitle.text = title
         tvDate.text = date
         tvMediaType.text = mediaType
