@@ -1,6 +1,6 @@
-# APOD_Clean_Architecture
-Astronomical Picture Of the Day NASA
+# APOD
 
+Astronomical Picture Of the Day NASA
 
 
 
