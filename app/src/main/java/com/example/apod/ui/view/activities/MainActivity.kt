@@ -1,13 +1,12 @@
 package com.example.apod.ui.view.activities
 
-import Constants.apiKey
+import Constants.APOD_API_KEY
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.apod.R
 import com.example.apod.data.network.APIService
 import com.example.apod.core.RetrofitHelper.getRetrofit
 import com.example.apod.databinding.ActivityMainBinding
@@ -24,6 +23,7 @@ class MainActivity : AppCompatActivity(), androidx.appcompat.widget.SearchView.O
     private val apodTitle = mutableListOf<String?>()
     private val apodDescrip = mutableListOf<String?>()
     private val apodDate = mutableListOf<String?>()
+    private val apodMediaType = mutableListOf<String?>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity(), androidx.appcompat.widget.SearchView.O
     }
 
     private fun initRecycler(){
-        adapter = APODAdapter(this, apodImages, apodTitle, apodDescrip, apodDate)
+        adapter = APODAdapter(this, apodImages, apodTitle, apodDescrip, apodDate, apodMediaType)
         binding.rvAPODs.layoutManager = LinearLayoutManager (this)
         binding.rvAPODs.adapter = adapter
     }
@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity(), androidx.appcompat.widget.SearchView.O
     @SuppressLint("NotifyDataSetChanged")
     private fun searchByDate(query:String){
         CoroutineScope(Dispatchers.IO).launch {
-            val call = getRetrofit().create(APIService::class.java).getAPODByDate("apod?api_key=$apiKey&date=$query&concept_tags=True")
+            val call = getRetrofit().create(APIService::class.java).getAPODByDate("apod?api_key=$APOD_API_KEY&date=$query&concept_tags=True")
             val apod = call.body()
             //Para poder salir de esa corrutina utilizaremos runOnUiThread{} y lo que esté entre esas llaves se hará en el hilo principal
             // aunque esté dentro de una corrutina.
@@ -70,7 +70,7 @@ class MainActivity : AppCompatActivity(), androidx.appcompat.widget.SearchView.O
     @SuppressLint("NotifyDataSetChanged")
     private fun searchByCount(query:String){
         CoroutineScope(Dispatchers.IO).launch {
-            val call = getRetrofit().create(APIService::class.java).getAPODByCount("apod?api_key=$apiKey&count=$query")
+            val call = getRetrofit().create(APIService::class.java).getAPODByCount("apod?api_key=$APOD_API_KEY&count=$query")
             val apod = call.body()
             runOnUiThread {
                 if (call.isSuccessful) {
@@ -78,11 +78,13 @@ class MainActivity : AppCompatActivity(), androidx.appcompat.widget.SearchView.O
                     apodTitle.clear()
                     apodDescrip.clear()
                     apodDate.clear()
+                    apodMediaType.clear()
                     for(i in 0 until apod?.size!!){
                        apodImages.addAll(mutableListOf(apod[i].url))
                        apodTitle.addAll(mutableListOf(apod[i].title))
                        apodDescrip.addAll(mutableListOf(apod[i].explanation))
                        apodDate.addAll(mutableListOf(apod[i].date))
+                       apodMediaType.addAll(mutableListOf(apod[i].mediaType))
                     }
                     adapter.notifyDataSetChanged()
                 } else {

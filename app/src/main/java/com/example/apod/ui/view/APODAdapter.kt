@@ -1,5 +1,5 @@
 package com.example.apod.ui.view
-import android.content.ClipDescription
+
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -10,7 +10,8 @@ class APODAdapter(private val context: Context,
                   private val images: MutableList<String?>,
                   private val titles: MutableList<String?>,
                   private val description: MutableList<String?>,
-                  private val date: MutableList<String?>)
+                  private val date: MutableList<String?>,
+                  private val mediaType: MutableList<String?>)
     : RecyclerView.Adapter<APODViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): APODViewHolder {
@@ -23,7 +24,8 @@ class APODAdapter(private val context: Context,
         val title = titles[position]
         val description = description[position]
         val date = date[position]
-        holder.bind(image, title, description, date,  context)
+        val mediaType = mediaType[position]
+        holder.bind(image, title, description, date, mediaType, context)
     }
 
     override fun getItemCount(): Int = images.size
