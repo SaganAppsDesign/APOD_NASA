@@ -20,21 +20,23 @@ class DetailActivity : YouTubeBaseActivity(){
         super.onCreate(savedInstanceState)
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        initYouTubePlayer()
 
         val intent = intent
         val title = intent.getStringExtra("title")
         image = intent.getStringExtra("image")!!.toString()
+
         val description = intent.getStringExtra("description")
         val mediaType = intent.getStringExtra("mediaType")
+        binding.tvTitle.text = title
+        binding.tvDescription.text = description
 
         if(mediaType=="image"){
-            binding.tvTitle.text = title
-            binding.tvDescription.text = description
             Picasso.get().load(image).into(binding.ivImage)
             binding.YouTubeView.visibility = View.GONE
         } else {
+            initYouTubePlayer()
             binding.YouTubeView.visibility = View.VISIBLE
+            binding.ivImage.visibility = View.GONE
         }
     }
 
@@ -46,12 +48,9 @@ class DetailActivity : YouTubeBaseActivity(){
                 player: YouTubePlayer?,
                 p2: Boolean
             ) {
-                if(!p2){
-                    val a = image.substring(30, 41)
-                    player?.loadVideo(a)
-                    player?.play()
-                    println("Esto es una prueba ${image.substring(30)}")
-                }
+                   val a = image.substring(30, 41)
+                   player?.loadVideo(a)
+                   player?.play()
            }
 
             override fun onInitializationFailure(
@@ -59,6 +58,7 @@ class DetailActivity : YouTubeBaseActivity(){
                 p1: YouTubeInitializationResult?
             ) {
                 Log.i("p1", p1.toString())
+                Log.i("p0", p0.toString())
             }
         })
     }
