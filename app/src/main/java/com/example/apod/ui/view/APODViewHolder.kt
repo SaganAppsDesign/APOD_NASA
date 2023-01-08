@@ -26,6 +26,11 @@ class APODViewHolder(view: View): RecyclerView.ViewHolder(view) {
              mediaType: String?,
              context: Context){
 
+        if (mediaType=="video"){
+            Picasso.get().load(R.drawable.apod).into(ivAPOD)
+        } else {
+            Picasso.get().load(image).into(ivAPOD)
+        }
         Picasso.get().load(image).into(ivAPOD)
         tvTitle.text = title
         tvDate.text = date

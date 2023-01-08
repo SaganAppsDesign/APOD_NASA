@@ -69,6 +69,7 @@
                 android:textColor="@color/white"
                 android:textColorHint="#887C7C"
                 android:textSize="25sp"
+                android:fontFamily="@font/monserrat_alternates"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
