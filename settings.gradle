@@ -6,5 +6,5 @@ dependencyResolutionManagement {
         maven { url "https://jitpack.io" }
     }
 }
-rootProject.name = "ReccyclerView"
+rootProject.name = "APOD"
 include ':app'

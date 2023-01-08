@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/david/AndroidStudioProjects/APOD/app/src/main/res/layout/activity_main.xml" value="0.3625" />
+        <entry key="..\:/Users/david/AndroidStudioProjects/APOD/app/src/main/res/layout/item_apod.xml" value="0.536" />
         <entry key="..\:/Users/david/AndroidStudioProjects/ReccyclerView/app/src/main/res/layout/activity_detail.xml" value="0.2" />
         <entry key="..\:/Users/david/AndroidStudioProjects/ReccyclerView/app/src/main/res/layout/activity_main.xml" value="0.22777777777777777" />
         <entry key="..\:/Users/david/AndroidStudioProjects/ReccyclerView/app/src/main/res/layout/item_apod.xml" value="0.264" />

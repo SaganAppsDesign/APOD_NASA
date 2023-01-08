@@ -1,5 +1,6 @@
 package com.example.apod.ui.view.activities
 
+import Constants.apiKey
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.inputmethod.InputMethodManager
@@ -22,8 +23,7 @@ class MainActivity : AppCompatActivity(), androidx.appcompat.widget.SearchView.O
     private val apodImages = mutableListOf<String?>()
     private val apodTitle = mutableListOf<String?>()
     private val apodDescrip = mutableListOf<String?>()
-    private val apiKey = "TCx9Wm5GIDBfk6tl5QlGA9Vf1fc7jU48f3SA7fcq"
-
+    private val apodDate = mutableListOf<String?>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity(), androidx.appcompat.widget.SearchView.O
     }
 
     private fun initRecycler(){
-        adapter = APODAdapter(this, apodImages, apodTitle, apodDescrip)
+        adapter = APODAdapter(this, apodImages, apodTitle, apodDescrip, apodDate)
         binding.rvAPODs.layoutManager = LinearLayoutManager (this)
         binding.rvAPODs.adapter = adapter
     }
@@ -77,10 +77,12 @@ class MainActivity : AppCompatActivity(), androidx.appcompat.widget.SearchView.O
                     apodImages.clear()
                     apodTitle.clear()
                     apodDescrip.clear()
+                    apodDate.clear()
                     for(i in 0 until apod?.size!!){
                        apodImages.addAll(mutableListOf(apod[i].url))
                        apodTitle.addAll(mutableListOf(apod[i].title))
                        apodDescrip.addAll(mutableListOf(apod[i].explanation))
+                       apodDate.addAll(mutableListOf(apod[i].date))
                     }
                     adapter.notifyDataSetChanged()
                 } else {

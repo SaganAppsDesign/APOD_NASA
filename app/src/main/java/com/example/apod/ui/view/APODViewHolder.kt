@@ -16,14 +16,17 @@ class APODViewHolder(view: View): RecyclerView.ViewHolder(view) {
 
     private val ivAPOD: ImageView = view.findViewById(R.id.ivApod)
     private val tvTitle: TextView = view.findViewById(R.id.tvTitle)
+    private val tvDate: TextView = view.findViewById(R.id.tvDate)
 
     fun bind(image: String?,
              title: String?,
              description: String?,
+             date: String?,
              context: Context){
 
         Picasso.get().load(image).into(ivAPOD)
         tvTitle.text = title
+        tvDate.text = date
         itemView.setOnClickListener { v: View  ->
             passData(tvTitle.text.toString(), image, description, context)
         }
@@ -36,9 +39,6 @@ class APODViewHolder(view: View): RecyclerView.ViewHolder(view) {
         intent.putExtra("title", title)
         intent.putExtra("image", image)
         intent.putExtra("description", description)
-
         context.startActivity(intent)
     }
-
-
 }
