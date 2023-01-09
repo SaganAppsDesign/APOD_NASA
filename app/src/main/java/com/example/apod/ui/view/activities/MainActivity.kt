@@ -96,7 +96,7 @@ class MainActivity : AppCompatActivity(), androidx.appcompat.widget.SearchView.O
         apodDate.clear()
         apodMediaType.clear()
         if(!query.isNullOrEmpty()){
-            apodResponse.getApodData(query, adapter)
+            apodResponse.getApodData(query)
             apodResponse.apodLiveData.observe(this){
                 for (i in 0 until it.size){
                     apodImages.addAll(mutableListOf(it[i]?.url))

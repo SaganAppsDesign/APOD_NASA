@@ -1,18 +1,26 @@
 package com.example.apod.ui.viewmodel
 
+import android.annotation.SuppressLint
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.apod.data.model.APODResponse
-import com.example.apod.data.network.GetApodByCount.searchByCount
-import com.example.apod.ui.view.recyclerview.APODAdapter
+import com.example.apod.domain.GetApodByCountUseCase
+import kotlinx.coroutines.launch
 
 class ApodViewModel : ViewModel() {
 
     val apodLiveData = MutableLiveData <MutableList <APODResponse?>>()
 
-    fun getApodData(query: String, adapter: APODAdapter){
+    @SuppressLint("StaticFieldLeak")
+    val getApodByCountUseCase = GetApodByCountUseCase()
 
-        val apodData: MutableList <APODResponse?> = searchByCount(query, adapter)
-        apodLiveData.postValue(apodData)
-    }
+    fun getApodData(query: String){
+        viewModelScope.launch {
+            val apodData:List <APODResponse?> = getApodByCountUseCase(query)
+            if(apodData.isNotEmpty()){
+                apodLiveData.postValue(apodData as MutableList<APODResponse?>?)
+            }
+        }
+     }
 }
