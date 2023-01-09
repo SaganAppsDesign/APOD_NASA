@@ -2,6 +2,7 @@ package com.example.apod.ui.view.activities
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -66,14 +67,11 @@ class MainActivity : AppCompatActivity(), androidx.appcompat.widget.SearchView.O
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onQueryTextSubmit(query: String?): Boolean {
-        apodImages.clear()
-        apodTitle.clear()
-        apodDescrip.clear()
-        apodDate.clear()
-        apodMediaType.clear()
+        Log.i("apodImages.size",apodImages.size.toString())
         if(!query.isNullOrEmpty()){
             apodViewModel.getApodData(query)
             apodViewModel.apodLiveData.observe(this){
+                removeApodList()
                 for (i in 0 until it.size){
                     apodImages.addAll(mutableListOf(it[i]?.url))
                     apodTitle.addAll(mutableListOf(it[i]?.title))
@@ -95,6 +93,14 @@ class MainActivity : AppCompatActivity(), androidx.appcompat.widget.SearchView.O
 
     override fun onQueryTextChange(newText: String?): Boolean {
         return true
+    }
+
+    private fun removeApodList(){
+        apodImages.clear()
+        apodTitle.clear()
+        apodDescrip.clear()
+        apodDate.clear()
+        apodMediaType.clear()
     }
 }
 

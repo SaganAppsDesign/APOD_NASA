@@ -13,7 +13,6 @@ class ApodViewModel : ViewModel() {
     val apodLiveData = MutableLiveData <MutableList <APODResponse?>>()
     val isLoading = MutableLiveData <Boolean>()
 
-
     @SuppressLint("StaticFieldLeak")
     val getApodByCountUseCase = GetApodByCountUseCase()
 
