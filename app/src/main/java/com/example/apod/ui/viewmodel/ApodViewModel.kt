@@ -11,15 +11,19 @@ import kotlinx.coroutines.launch
 class ApodViewModel : ViewModel() {
 
     val apodLiveData = MutableLiveData <MutableList <APODResponse?>>()
+    val isLoading = MutableLiveData <Boolean>()
+
 
     @SuppressLint("StaticFieldLeak")
     val getApodByCountUseCase = GetApodByCountUseCase()
 
     fun getApodData(query: String){
         viewModelScope.launch {
+            isLoading.postValue(true)
             val apodData:List <APODResponse?> = getApodByCountUseCase(query)
             if(apodData.isNotEmpty()){
                 apodLiveData.postValue(apodData as MutableList<APODResponse?>?)
+                isLoading.postValue(false)
             }
         }
      }

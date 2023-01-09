@@ -1,9 +1,11 @@
 package com.example.apod.ui.view.activities
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.apod.databinding.ActivityMainBinding
 import com.example.apod.ui.view.recyclerview.APODAdapter
@@ -13,7 +15,7 @@ class MainActivity : AppCompatActivity(), androidx.appcompat.widget.SearchView.O
 
     private lateinit var binding : ActivityMainBinding
     private lateinit var adapter: APODAdapter
-    private val apodResponse: ApodViewModel by viewModels()
+    private val apodViewModel: ApodViewModel by viewModels()
     private val apodImages = mutableListOf<String?>()
     private val apodTitle = mutableListOf<String?>()
     private val apodDescrip = mutableListOf<String?>()
@@ -56,39 +58,13 @@ class MainActivity : AppCompatActivity(), androidx.appcompat.widget.SearchView.O
 //        }
 //        }
 
-//    @SuppressLint("NotifyDataSetChanged")
-//    private fun searchByCount(query:String){
-//        CoroutineScope(Dispatchers.IO).launch {
-//            val call = getRetrofit().create(APIService::class.java).getAPODByCount("apod?api_key=$APOD_API_KEY&count=$query")
-//            val apod = call.body()
-//            runOnUiThread {
-//                if (call.isSuccessful) {
-//                    apodImages.clear()
-//                    apodTitle.clear()
-//                    apodDescrip.clear()
-//                    apodDate.clear()
-//                    apodMediaType.clear()
-//                    for(i in 0 until apod?.size!!){
-//                       apodImages.addAll(mutableListOf(apod[i].url))
-//                       apodTitle.addAll(mutableListOf(apod[i].title))
-//                       apodDescrip.addAll(mutableListOf(apod[i].explanation))
-//                       apodDate.addAll(mutableListOf(apod[i].date))
-//                       apodMediaType.addAll(mutableListOf(apod[i].mediaType))
-//                    }
-//                    adapter.notifyDataSetChanged()
-//                } else {
-//                    showError()
-//                }
-//                hideKeyboard()
-//            }
-//        }
-//    }
 
     private fun hideKeyboard() {
         val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(binding.viewRoot.windowToken, 0)
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onQueryTextSubmit(query: String?): Boolean {
         apodImages.clear()
         apodTitle.clear()
@@ -96,8 +72,8 @@ class MainActivity : AppCompatActivity(), androidx.appcompat.widget.SearchView.O
         apodDate.clear()
         apodMediaType.clear()
         if(!query.isNullOrEmpty()){
-            apodResponse.getApodData(query)
-            apodResponse.apodLiveData.observe(this){
+            apodViewModel.getApodData(query)
+            apodViewModel.apodLiveData.observe(this){
                 for (i in 0 until it.size){
                     apodImages.addAll(mutableListOf(it[i]?.url))
                     apodTitle.addAll(mutableListOf(it[i]?.title))
@@ -105,7 +81,13 @@ class MainActivity : AppCompatActivity(), androidx.appcompat.widget.SearchView.O
                     apodDate.addAll(mutableListOf(it[i]?.date))
                     apodMediaType.addAll(mutableListOf(it[i]?.mediaType))
                 }
+                adapter.notifyDataSetChanged()
             }
+
+            apodViewModel.isLoading.observe(this){
+                    binding.pbAPOD.isVisible = it
+            }
+
             hideKeyboard()
         }
         return true
