@@ -2,7 +2,7 @@
 
 Astronomical Picture Of the Day NASA:
 
-This Android app allows you to calculate your age and upload the photo associated with that year, from your Android device. It also has links to the ephemeris of the chosen year.
+This Android app allows you to discover the cosmos! Each day a different image or photograph of our fascinating universe is featured, along with a brief explanation written by a professional astronomer.
 
 - Kotlin. 
 - MVVM.
