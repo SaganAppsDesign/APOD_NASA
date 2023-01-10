@@ -3,14 +3,24 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Android/APOD_NASA/app/src/main/res/layout/activity_main.xml" value="0.18697916666666667" />
+        <entry key="..\:/Users/david/AndroidStudioProjects/APOD/app/src/main/res/drawable/bg_title.xml" value="0.2630208333333333" />
+        <entry key="..\:/Users/david/AndroidStudioProjects/APOD/app/src/main/res/font/monserrat_alternates.xml" value="0.23645833333333333" />
+        <entry key="..\:/Users/david/AndroidStudioProjects/APOD/app/src/main/res/font/roboto_medium.xml" value="0.3927083333333333" />
+        <entry key="..\:/Users/david/AndroidStudioProjects/APOD/app/src/main/res/layout/activity_detail.xml" value="0.2" />
+        <entry key="..\:/Users/david/AndroidStudioProjects/APOD/app/src/main/res/layout/activity_main.xml" value="0.3625" />
+        <entry key="..\:/Users/david/AndroidStudioProjects/APOD/app/src/main/res/layout/item_apod.xml" value="0.3395872420262664" />
+        <entry key="..\:/Users/david/AndroidStudioProjects/ReccyclerView/app/src/main/res/layout/activity_detail.xml" value="0.2" />
         <entry key="..\:/Users/david/AndroidStudioProjects/ReccyclerView/app/src/main/res/layout/activity_main.xml" value="0.22777777777777777" />
+        <entry key="..\:/Users/david/AndroidStudioProjects/ReccyclerView/app/src/main/res/layout/item_apod.xml" value="0.264" />
         <entry key="..\:/Users/david/AndroidStudioProjects/ReccyclerView/app/src/main/res/layout/item_dogs.xml" value="0.3625" />
         <entry key="..\:/Users/david/AndroidStudioProjects/ReccyclerView/app/src/main/res/layout/item_superhero.xml" value="0.3300970873786408" />
         <entry key="..\:/Users/david/AndroidStudioProjects/ReccyclerView/app/src/main/res/layout/text_row_item.xml" value="0.22777777777777777" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
