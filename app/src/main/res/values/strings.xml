@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">Razas de perros</string>
+    <string name="app_name">APOD</string>
+    <string name="api_key">TCx9Wm5GIDBfk6tl5QlGA9Vf1fc7jU48f3SA7fcq</string>
 </resources>
