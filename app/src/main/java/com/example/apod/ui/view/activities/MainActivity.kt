@@ -1,6 +1,8 @@
 package com.example.apod.ui.view.activities
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -10,78 +12,86 @@ import com.example.apod.databinding.ActivityMainBinding
 import com.example.apod.ui.view.recyclerview.APODAdapter
 import com.example.apod.ui.viewmodel.ApodViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import java.text.SimpleDateFormat
+import java.util.*
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityMainBinding
-    private lateinit var adapter: APODAdapter
+    private var adapter: APODAdapter? = null
     private val apodViewModel: ApodViewModel by viewModels()
     private val apodImages = mutableListOf<String?>()
     private val apodTitle = mutableListOf<String?>()
     private val apodDescrip = mutableListOf<String?>()
     private val apodDate = mutableListOf<String?>()
     private val apodMediaType = mutableListOf<String?>()
-    private var apodNumber = "0"
 
+    @SuppressLint("SimpleDateFormat", "NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-//        binding.svAPOD.setOnQueryTextListener(this)
 
-        initRecycler()
+        val time = Calendar.getInstance().time
+        val formatter = SimpleDateFormat("yyyy-MM-dd")
+        val current = formatter.format(time)
 
-        binding.btNumber.setOnClickListener{
-            apodNumber = binding.etNumber.text.toString()
-
-//            if(apodNumber.toInt() > 60 || apodNumber.isEmpty()){
-////                binding.btNumber.isEnabled = false
-////                binding.btNumber.alpha = 0.5F
-//                Toast.makeText(this, "Introduce una cantidad menor a 60, por favor", Toast.LENGTH_SHORT).show()
-//                binding.pbAPOD.isVisible = false
-//
-//            } else{
-////                binding.btNumber.isEnabled = true
-////                binding.btNumber.alpha = 1F
-//
-//                apodViewModel.getApodByCount(apodNumber)
-//                apodViewModel.apodByCountLiveData.observe(this){
-//                    removeApodList()
-//                    for (i in 0 until it.size){
-//                        apodImages.addAll(mutableListOf(it[i]?.url))
-//                        apodTitle.addAll(mutableListOf(it[i]?.title))
-//                        apodDescrip.addAll(mutableListOf(it[i]?.explanation))
-//                        apodDate.addAll(mutableListOf(it[i]?.date))
-//                        apodMediaType.addAll(mutableListOf(it[i]?.mediaType))
-//                    }
-//                    adapter.notifyDataSetChanged()
-//                }
-//
-//                apodViewModel.isLoading.observe(this){
-//                    binding.pbAPOD.isVisible = it
-//                }
-//                hideKeyboard()
-//            }
-
-            apodViewModel.getApodByDate(apodNumber)
-            apodViewModel.apodByDateLiveData.observe(this){
-                removeApodList()
-                    apodImages.addAll(mutableListOf(it?.url))
-                    apodTitle.addAll(mutableListOf(it?.title))
-                    apodDescrip.addAll(mutableListOf(it?.explanation))
-                    apodDate.addAll(mutableListOf(it?.date))
-                    apodMediaType.addAll(mutableListOf(it?.mediaType))
-                }
-                adapter.notifyDataSetChanged()
-
-                apodViewModel.isLoading.observe(this){
-                    binding.pbAPOD.isVisible = it
-                }
-                hideKeyboard()
-
+        apodViewModel.getApodByDate(current)
+        apodViewModel.apodByDateLiveData.observe(this){
+            removeApodList()
+            apodImages.addAll(mutableListOf(it?.url))
+            apodTitle.addAll(mutableListOf(it?.title))
+            apodDescrip.addAll(mutableListOf(it?.explanation))
+            apodDate.addAll(mutableListOf(it?.date))
+            apodMediaType.addAll(mutableListOf(it?.mediaType))
+            initRecycler()
         }
+        adapter?.notifyDataSetChanged()
+
+        apodViewModel.isLoading.observe(this){
+            binding.pbAPOD.isVisible = it
+        }
+
+
+
+//        binding.btNumber.setOnClickListener{
+//            current = binding.etNumber.text.toString()
+//
+////            if(apodNumber.toInt() > 60 || apodNumber.isEmpty()){
+//////                binding.btNumber.isEnabled = false
+//////                binding.btNumber.alpha = 0.5F
+////                Toast.makeText(this, "Introduce una cantidad menor a 60, por favor", Toast.LENGTH_SHORT).show()
+////                binding.pbAPOD.isVisible = false
+////
+////            } else{
+//////                binding.btNumber.isEnabled = true
+//////                binding.btNumber.alpha = 1F
+////
+////                apodViewModel.getApodByCount(apodNumber)
+////                apodViewModel.apodByCountLiveData.observe(this){
+////                    removeApodList()
+////                    for (i in 0 until it.size){
+////                        apodImages.addAll(mutableListOf(it[i]?.url))
+////                        apodTitle.addAll(mutableListOf(it[i]?.title))
+////                        apodDescrip.addAll(mutableListOf(it[i]?.explanation))
+////                        apodDate.addAll(mutableListOf(it[i]?.date))
+////                        apodMediaType.addAll(mutableListOf(it[i]?.mediaType))
+////                    }
+////                    adapter.notifyDataSetChanged()
+////                }
+////
+////                apodViewModel.isLoading.observe(this){
+////                    binding.pbAPOD.isVisible = it
+////                }
+////                hideKeyboard()
+////            }
+//
+//
+//                hideKeyboard()
+//
+//        }
 
     }
 
