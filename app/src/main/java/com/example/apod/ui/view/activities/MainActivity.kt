@@ -1,8 +1,6 @@
 package com.example.apod.ui.view.activities
 
-import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -11,8 +9,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.apod.databinding.ActivityMainBinding
 import com.example.apod.ui.view.recyclerview.APODAdapter
 import com.example.apod.ui.viewmodel.ApodViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-class MainActivity : AppCompatActivity(), androidx.appcompat.widget.SearchView.OnQueryTextListener {
+@AndroidEntryPoint
+class MainActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityMainBinding
     private lateinit var adapter: APODAdapter
@@ -22,15 +22,67 @@ class MainActivity : AppCompatActivity(), androidx.appcompat.widget.SearchView.O
     private val apodDescrip = mutableListOf<String?>()
     private val apodDate = mutableListOf<String?>()
     private val apodMediaType = mutableListOf<String?>()
+    private var apodNumber = "0"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.svDogs.setOnQueryTextListener(this)
+//        binding.svAPOD.setOnQueryTextListener(this)
 
         initRecycler()
+
+        binding.btNumber.setOnClickListener{
+            apodNumber = binding.etNumber.text.toString()
+
+//            if(apodNumber.toInt() > 60 || apodNumber.isEmpty()){
+////                binding.btNumber.isEnabled = false
+////                binding.btNumber.alpha = 0.5F
+//                Toast.makeText(this, "Introduce una cantidad menor a 60, por favor", Toast.LENGTH_SHORT).show()
+//                binding.pbAPOD.isVisible = false
+//
+//            } else{
+////                binding.btNumber.isEnabled = true
+////                binding.btNumber.alpha = 1F
+//
+//                apodViewModel.getApodByCount(apodNumber)
+//                apodViewModel.apodByCountLiveData.observe(this){
+//                    removeApodList()
+//                    for (i in 0 until it.size){
+//                        apodImages.addAll(mutableListOf(it[i]?.url))
+//                        apodTitle.addAll(mutableListOf(it[i]?.title))
+//                        apodDescrip.addAll(mutableListOf(it[i]?.explanation))
+//                        apodDate.addAll(mutableListOf(it[i]?.date))
+//                        apodMediaType.addAll(mutableListOf(it[i]?.mediaType))
+//                    }
+//                    adapter.notifyDataSetChanged()
+//                }
+//
+//                apodViewModel.isLoading.observe(this){
+//                    binding.pbAPOD.isVisible = it
+//                }
+//                hideKeyboard()
+//            }
+
+            apodViewModel.getApodByDate(apodNumber)
+            apodViewModel.apodByDateLiveData.observe(this){
+                removeApodList()
+                    apodImages.addAll(mutableListOf(it?.url))
+                    apodTitle.addAll(mutableListOf(it?.title))
+                    apodDescrip.addAll(mutableListOf(it?.explanation))
+                    apodDate.addAll(mutableListOf(it?.date))
+                    apodMediaType.addAll(mutableListOf(it?.mediaType))
+                }
+                adapter.notifyDataSetChanged()
+
+                apodViewModel.isLoading.observe(this){
+                    binding.pbAPOD.isVisible = it
+                }
+                hideKeyboard()
+
+        }
+
     }
 
     private fun initRecycler(){
@@ -39,61 +91,38 @@ class MainActivity : AppCompatActivity(), androidx.appcompat.widget.SearchView.O
         binding.rvAPODs.adapter = adapter
     }
 
-//    @SuppressLint("NotifyDataSetChanged")
-//    private fun searchByDate(query:String){
-//        CoroutineScope(Dispatchers.IO).launch {
-//            val call = getRetrofit().create(APIService::class.java).getAPODByDate("apod?api_key=$APOD_API_KEY&date=$query&concept_tags=True")
-//            val apod = call.body()
-//            runOnUiThread {
-//                if (call.isSuccessful) {
-//                    val images = mutableListOf(apod?.url)
-//                    apodImages.clear()
-//                    apodImages.addAll(images)
-//                    adapter.notifyDataSetChanged()
-//
-//                } else {
-//                    showError()
-//                }
-//                hideKeyboard()
-//            }
-//        }
-//        }
-
-
     private fun hideKeyboard() {
         val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(binding.viewRoot.windowToken, 0)
     }
 
-    @SuppressLint("NotifyDataSetChanged")
-    override fun onQueryTextSubmit(query: String?): Boolean {
-        Log.i("apodImages.size",apodImages.size.toString())
-        if(!query.isNullOrEmpty()){
-            apodViewModel.getApodData(query)
-            apodViewModel.apodLiveData.observe(this){
-                removeApodList()
-                for (i in 0 until it.size){
-                    apodImages.addAll(mutableListOf(it[i]?.url))
-                    apodTitle.addAll(mutableListOf(it[i]?.title))
-                    apodDescrip.addAll(mutableListOf(it[i]?.explanation))
-                    apodDate.addAll(mutableListOf(it[i]?.date))
-                    apodMediaType.addAll(mutableListOf(it[i]?.mediaType))
-                }
-                adapter.notifyDataSetChanged()
-            }
-
-            apodViewModel.isLoading.observe(this){
-                    binding.pbAPOD.isVisible = it
-            }
-
-            hideKeyboard()
-        }
-        return true
-    }
-
-    override fun onQueryTextChange(newText: String?): Boolean {
-        return true
-    }
+//    @SuppressLint("NotifyDataSetChanged")
+//    override fun onQueryTextSubmit(query: String?): Boolean {
+//        if(!query.isNullOrEmpty()){
+//            apodViewModel.getApodByCount(query)
+//            apodViewModel.apodByCountLiveData.observe(this){
+//                removeApodList()
+//                for (i in 0 until it.size){
+//                    apodImages.addAll(mutableListOf(it[i]?.url))
+//                    apodTitle.addAll(mutableListOf(it[i]?.title))
+//                    apodDescrip.addAll(mutableListOf(it[i]?.explanation))
+//                    apodDate.addAll(mutableListOf(it[i]?.date))
+//                    apodMediaType.addAll(mutableListOf(it[i]?.mediaType))
+//                }
+//                adapter.notifyDataSetChanged()
+//            }
+//
+//            apodViewModel.isLoading.observe(this){
+//                    binding.pbAPOD.isVisible = it
+//            }
+//            hideKeyboard()
+//        }
+//        return true
+//    }
+//
+//    override fun onQueryTextChange(newText: String?): Boolean {
+//        return true
+//    }
 
     private fun removeApodList(){
         apodImages.clear()

@@ -7,12 +7,11 @@ import com.example.apod.databinding.ActivityMainBinding
 
 object Functions: AppCompatActivity() {
 
-//    fun hideKeyboard(binding: ActivityMainBinding) {
-//        val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-//        imm.hideSoftInputFromWindow(binding.viewRoot.windowToken, 0)
-//    }
-
     fun showError() {
         Toast.makeText(this, "Ha ocurrido un error", Toast.LENGTH_SHORT).show()
     }
+    fun showError2() {
+        Toast.makeText(this, "Introduce una cantidad menor a 50, por favor", Toast.LENGTH_SHORT).show()
+    }
+
 }
