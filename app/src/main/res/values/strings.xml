@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">APOD</string>
     <string name="api_key">TCx9Wm5GIDBfk6tl5QlGA9Vf1fc7jU48f3SA7fcq</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -3,8 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Android/APOD_NASA/app/src/main/res/drawable/nav_item_color_state.xml" value="0.2485" />
         <entry key="..\:/Android/APOD_NASA/app/src/main/res/layout/activity_detail.xml" value="0.26666666666666666" />
-        <entry key="..\:/Android/APOD_NASA/app/src/main/res/layout/activity_main.xml" value="0.4" />
+        <entry key="..\:/Android/APOD_NASA/app/src/main/res/layout/activity_main.xml" value="0.38497652582159625" />
+        <entry key="..\:/Android/APOD_NASA/app/src/main/res/layout/fragment_past_image.xml" value="0.35260416666666666" />
+        <entry key="..\:/Android/APOD_NASA/app/src/main/res/layout/fragment_ramdom_image.xml" value="0.2125" />
+        <entry key="..\:/Android/APOD_NASA/app/src/main/res/layout/fragment_today_image.xml" value="0.2" />
         <entry key="..\:/Android/APOD_NASA/app/src/main/res/layout/item_apod.xml" value="0.26666666666666666" />
         <entry key="..\:/Android/APOD_NASA/app/src/main/res/menu/bottom_menu.xml" value="0.28177083333333336" />
         <entry key="..\:/Users/david/AndroidStudioProjects/APOD/app/src/main/res/drawable/bg_title.xml" value="0.2630208333333333" />

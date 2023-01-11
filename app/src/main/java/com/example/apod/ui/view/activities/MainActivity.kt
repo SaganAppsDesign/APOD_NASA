@@ -6,13 +6,16 @@ import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.fragment.app.Fragment
+import com.example.apod.R
 import com.example.apod.databinding.ActivityMainBinding
+import com.example.apod.ui.view.fragments.PastImageFragment
+import com.example.apod.ui.view.fragments.RandomImageFragment
+import com.example.apod.ui.view.fragments.TodayImageFragment
 import com.example.apod.ui.view.recyclerview.APODAdapter
 import com.example.apod.ui.viewmodel.ApodViewModel
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
-import java.text.SimpleDateFormat
 import java.util.*
 
 @AndroidEntryPoint
@@ -27,6 +30,7 @@ class MainActivity : AppCompatActivity() {
     private val apodDate = mutableListOf<String?>()
     private val apodMediaType = mutableListOf<String?>()
 
+
     @SuppressLint("SimpleDateFormat", "NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,25 +38,40 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val time = Calendar.getInstance().time
-        val formatter = SimpleDateFormat("yyyy-MM-dd")
-        val current = formatter.format(time)
-
-        apodViewModel.getApodByDate(current)
-        apodViewModel.apodByDateLiveData.observe(this){
-            removeApodList()
-            apodImages.addAll(mutableListOf(it?.url))
-            apodTitle.addAll(mutableListOf(it?.title))
-            apodDescrip.addAll(mutableListOf(it?.explanation))
-            apodDate.addAll(mutableListOf(it?.date))
-            apodMediaType.addAll(mutableListOf(it?.mediaType))
-            initRecycler()
+        loadFragment(TodayImageFragment())
+        binding.bnMainActivity.setOnItemSelectedListener {
+            when (it.itemId) {
+                R.id.today -> {
+                    loadFragment(TodayImageFragment())
+                    true
+                }
+                R.id.past -> {
+                    loadFragment(PastImageFragment())
+                    true
+                }
+                R.id.random -> {
+                    loadFragment(RandomImageFragment())
+                    true
+                }
+                else -> {false}
+            }
         }
-        adapter?.notifyDataSetChanged()
 
-        apodViewModel.isLoading.observe(this){
-            binding.pbAPOD.isVisible = it
-        }
+//        apodViewModel.getApodByDate(current)
+//        apodViewModel.apodByDateLiveData.observe(this){
+//            removeApodList()
+//            apodImages.addAll(mutableListOf(it?.url))
+//            apodTitle.addAll(mutableListOf(it?.title))
+//            apodDescrip.addAll(mutableListOf(it?.explanation))
+//            apodDate.addAll(mutableListOf(it?.date))
+//            apodMediaType.addAll(mutableListOf(it?.mediaType))
+//            initRecycler()
+//        }
+//        adapter?.notifyDataSetChanged()
+//
+//        apodViewModel.isLoading.observe(this){
+//            binding.pbAPOD.isVisible = it
+//        }
 
 
 
@@ -94,53 +113,33 @@ class MainActivity : AppCompatActivity() {
 //        }
 
     }
-
-    private fun initRecycler(){
-        adapter = APODAdapter(this, apodImages, apodTitle, apodDescrip, apodDate, apodMediaType)
-        binding.rvAPODs.layoutManager = LinearLayoutManager (this)
-        binding.rvAPODs.adapter = adapter
+    private  fun loadFragment(fragment: Fragment){
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.container,fragment)
+        transaction.commit()
     }
 
-    private fun hideKeyboard() {
-        val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(binding.viewRoot.windowToken, 0)
-    }
 
-//    @SuppressLint("NotifyDataSetChanged")
-//    override fun onQueryTextSubmit(query: String?): Boolean {
-//        if(!query.isNullOrEmpty()){
-//            apodViewModel.getApodByCount(query)
-//            apodViewModel.apodByCountLiveData.observe(this){
-//                removeApodList()
-//                for (i in 0 until it.size){
-//                    apodImages.addAll(mutableListOf(it[i]?.url))
-//                    apodTitle.addAll(mutableListOf(it[i]?.title))
-//                    apodDescrip.addAll(mutableListOf(it[i]?.explanation))
-//                    apodDate.addAll(mutableListOf(it[i]?.date))
-//                    apodMediaType.addAll(mutableListOf(it[i]?.mediaType))
-//                }
-//                adapter.notifyDataSetChanged()
-//            }
-//
-//            apodViewModel.isLoading.observe(this){
-//                    binding.pbAPOD.isVisible = it
-//            }
-//            hideKeyboard()
-//        }
-//        return true
-//    }
-//
-//    override fun onQueryTextChange(newText: String?): Boolean {
-//        return true
+//    private fun initRecycler(){
+//        adapter = APODAdapter(this, apodImages, apodTitle, apodDescrip, apodDate, apodMediaType)
+//        binding.rvAPODs.layoutManager = LinearLayoutManager (this)
+//        binding.rvAPODs.adapter = adapter
 //    }
 
-    private fun removeApodList(){
-        apodImages.clear()
-        apodTitle.clear()
-        apodDescrip.clear()
-        apodDate.clear()
-        apodMediaType.clear()
-    }
+//    private fun hideKeyboard() {
+//        val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+//        imm.hideSoftInputFromWindow(binding.viewRoot.windowToken, 0)
+//    }
+
+
+//
+//    private fun removeApodList(){
+//        apodImages.clear()
+//        apodTitle.clear()
+//        apodDescrip.clear()
+//        apodDate.clear()
+//        apodMediaType.clear()
+//    }
 }
 
 
