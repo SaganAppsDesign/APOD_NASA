@@ -45,6 +45,7 @@ class TodayImageFragment : Fragment() {
         val time = Calendar.getInstance().time
         val formatter = SimpleDateFormat("yyyy-MM-dd")
         val current = formatter.format(time)
+
         apodViewModel.getApodByDate(current)
         apodViewModel.apodByDateLiveData.observe(viewLifecycleOwner){
             removeApodList()

@@ -1,10 +1,14 @@
 package com.example.apod.ui.view.fragments
 
+import android.annotation.SuppressLint
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -36,6 +40,8 @@ class PastImageFragment : Fragment() {
 
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
+    @SuppressLint("SimpleDateFormat")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -45,11 +51,13 @@ class PastImageFragment : Fragment() {
 
         initRecycler()
 
-        val time = Calendar.getInstance().time
         val formatter = SimpleDateFormat("yyyy-MM-dd")
-        val today = formatter.format(time)
+        val today = formatter.format(Calendar.getInstance().time)
+        val last50 = Calendar.getInstance()
+        last50.add(Calendar.DAY_OF_YEAR, -50)
+        val lastDay = formatter.format(last50.time)
 
-        loadAPODs(today, "2023-01-01")
+        loadAPODs(lastDay, today)
 
         return binding.root
     }
@@ -75,7 +83,7 @@ class PastImageFragment : Fragment() {
 //        })
 //    }
 
-    private fun loadAPODs(lastDay: String, today: String){
+    private fun loadAPODs(today: String, lastDay: String){
         apodViewModel.getApodLast50(today, lastDay)
         apodViewModel.apodLast50LiveData.observe(requireActivity()){
             removeApodList()

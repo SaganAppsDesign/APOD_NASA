@@ -37,6 +37,4 @@ class APODService @Inject constructor(
             response.body() ?: emptyList()
         }
     }
-
-
 }
