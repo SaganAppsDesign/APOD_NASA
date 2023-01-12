@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Android/APOD_NASA/app/src/main/res/drawable/nav_item_color_state.xml" value="0.2485" />
+        <entry key="..\:/Android/APOD_NASA/app/src/main/res/font/monserrat_alternates.xml" value="0.396875" />
         <entry key="..\:/Android/APOD_NASA/app/src/main/res/layout/activity_detail.xml" value="0.26666666666666666" />
         <entry key="..\:/Android/APOD_NASA/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/Android/APOD_NASA/app/src/main/res/layout/fragment_past_image.xml" value="0.264" />

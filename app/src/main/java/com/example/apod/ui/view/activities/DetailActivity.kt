@@ -4,6 +4,8 @@ import com.example.apod.Constants.YOUTUBE_API_KEY
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.core.content.res.ResourcesCompat
+import com.example.apod.R
 import com.example.apod.databinding.ActivityDetailBinding
 import com.google.android.youtube.player.YouTubeBaseActivity
 import com.google.android.youtube.player.YouTubeInitializationResult
@@ -27,6 +29,9 @@ class DetailActivity : YouTubeBaseActivity(){
         val mediaType = intent.getStringExtra("mediaType")
         binding.tvTitle.text = title
         binding.tvDescription.text = description
+
+        binding.tvTitle.typeface = ResourcesCompat.getFont(this, R.font.monserrat_alternates)
+        binding.tvDescription.typeface = ResourcesCompat.getFont(this, R.font.monserrat_alternates)
 
         if(mediaType=="image"){
             Picasso.get().load(image).into(binding.ivImage)

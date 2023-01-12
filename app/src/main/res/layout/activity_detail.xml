@@ -28,11 +28,10 @@
             <com.github.chrisbanes.photoview.PhotoView
                 android:id="@+id/ivImage"
                 android:layout_width="match_parent"
-                android:layout_height="520dp"
+                android:layout_height="400dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="150dp"
+                android:layout_marginTop="100dp"
                 android:layout_marginEnd="8dp"
-                android:layout_marginBottom="16dp"
                 app:layout_constraintBottom_toTopOf="@+id/tvDescription"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
@@ -59,17 +58,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
-                android:layout_marginTop="60dp"
+                android:layout_marginTop="32dp"
                 android:layout_marginEnd="32dp"
                 android:background="@drawable/bg_title"
+                android:fontFamily="@font/monserrat_alternates"
                 android:gravity="center|center_horizontal"
                 android:padding="10dp"
                 android:textAlignment="center"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textColor="@color/white"
                 android:textColorHint="#887C7C"
                 android:textSize="25sp"
-                android:fontFamily="@font/monserrat_alternates"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -85,7 +83,6 @@
                 android:gravity="center|center_horizontal"
                 android:padding="10dp"
                 android:textAlignment="center"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textColor="@color/white"
                 android:textColorHint="#887C7C"
                 android:textSize="20sp"
@@ -96,19 +93,4 @@
                 tools:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book." />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
-
-
-    <TextView
-        android:id="@+id/btBack"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        android:gravity="center"
-        android:padding="7dp"
-        android:textSize="18sp"
-        android:textColor="#ffffff"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
