@@ -17,7 +17,7 @@
         android:background="@drawable/bg_title"
         android:fontFamily="@font/monserrat_alternates"
         android:padding="10dp"
-        android:text="50 últimas APODs"
+        android:text="30 last APODs"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="25sp"

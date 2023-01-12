@@ -1,26 +1,22 @@
 package com.example.apod.ui.view.fragments
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.apod.R
 import com.example.apod.databinding.FragmentTodayImageBinding
 import com.example.apod.ui.view.activities.DetailActivity
-import com.example.apod.ui.view.recyclerview.APODAdapter
 import com.example.apod.ui.viewmodel.ApodViewModel
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.*
+
 @AndroidEntryPoint
 class TodayImageFragment : Fragment() {
 
@@ -67,6 +63,13 @@ class TodayImageFragment : Fragment() {
         }
         apodViewModel.isLoading.observe(viewLifecycleOwner){
             binding.pbAPOD.isVisible = it
+        }
+
+        binding.bnShare.setOnClickListener {
+            val shareIntent = Intent(Intent.ACTION_SEND)
+            shareIntent.type = "text/plain"
+            shareIntent.putExtra(Intent.EXTRA_TEXT, apodImages[0])
+            startActivity(Intent.createChooser(shareIntent, "Share APOD"))
         }
 
        return binding.root

@@ -1,15 +1,15 @@
 package com.example.apod.ui.view.fragments
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -23,7 +23,6 @@ import java.util.*
 @AndroidEntryPoint
 class PastImageFragment : Fragment() {
 
-
     private lateinit var binding : FragmentPastImageBinding
     private lateinit var adapter: APODAdapter
     private val apodViewModel: ApodViewModel by viewModels()
@@ -32,7 +31,6 @@ class PastImageFragment : Fragment() {
     private val apodDescrip = mutableListOf<String?>()
     private val apodDate = mutableListOf<String?>()
     private val apodMediaType = mutableListOf<String?>()
-    private var apodNumber = "0"
     var isLoading = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,7 +52,7 @@ class PastImageFragment : Fragment() {
         val formatter = SimpleDateFormat("yyyy-MM-dd")
         val today = formatter.format(Calendar.getInstance().time)
         val last50 = Calendar.getInstance()
-        last50.add(Calendar.DAY_OF_YEAR, -50)
+        last50.add(Calendar.DAY_OF_YEAR, -30)
         val lastDay = formatter.format(last50.time)
 
         loadAPODs(lastDay, today)
@@ -95,8 +93,8 @@ class PastImageFragment : Fragment() {
                 apodMediaType.addAll(mutableListOf(it[i]?.mediaType))
             }
             adapter.notifyDataSetChanged()
-        }
 
+        }
         apodViewModel.isLoading.observe(requireActivity()){
             binding.pbAPOD.isVisible = it
         }

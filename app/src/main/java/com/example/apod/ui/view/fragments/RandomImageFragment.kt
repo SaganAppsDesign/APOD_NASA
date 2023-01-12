@@ -59,6 +59,13 @@ class RandomImageFragment : Fragment() {
             binding.pbAPOD.isVisible = it
         }
 
+        binding.bnShare.setOnClickListener {
+            val shareIntent = Intent(Intent.ACTION_SEND)
+            shareIntent.type = "text/plain"
+            shareIntent.putExtra(Intent.EXTRA_TEXT, apodImages[0])
+            startActivity(Intent.createChooser(shareIntent, "Share APOD"))
+        }
+
         return binding.root
     }
 

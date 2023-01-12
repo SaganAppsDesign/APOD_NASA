@@ -3,8 +3,10 @@ package com.example.apod.ui.view.recyclerview
 import android.content.Context
 import android.content.Intent
 import android.view.View
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.apod.R
 import com.example.apod.ui.view.activities.DetailActivity
@@ -16,6 +18,7 @@ class APODViewHolder(view: View): RecyclerView.ViewHolder(view) {
     private val tvTitle: TextView = view.findViewById(R.id.tvTitle)
     private val tvDate: TextView = view.findViewById(R.id.tvDate)
     private val tvMediaType: TextView = view.findViewById(R.id.tvMediaType)
+    private val share: ImageButton = view.findViewById(R.id.bnShare)
 
     fun bind(image: String?,
              title: String?,
@@ -34,9 +37,17 @@ class APODViewHolder(view: View): RecyclerView.ViewHolder(view) {
         tvDate.text = date
         tvMediaType.text = mediaType
 
+        share.setOnClickListener{
+            val shareIntent = Intent(Intent.ACTION_SEND)
+            shareIntent.type = "text/plain"
+            shareIntent.putExtra(Intent.EXTRA_TEXT, image)
+            context.startActivity(Intent.createChooser(shareIntent, "Share APOD"))
+        }
+
         itemView.setOnClickListener {
             passData(tvTitle.text.toString(), image, description, mediaType, context)
         }
+
      }
 
     private fun passData(title: String, image: String?, description: String?, mediaType: String?, context: Context){
