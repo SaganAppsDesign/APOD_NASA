@@ -12,4 +12,9 @@ interface APIService {
 
     @GET
     suspend fun getAPODByCount(@Url url:String): Response<List<APODResponse>>
+
+    @GET
+    suspend fun getAPODLastMonth(@Url url:String): Response<List<APODResponse>>
+
+
 }

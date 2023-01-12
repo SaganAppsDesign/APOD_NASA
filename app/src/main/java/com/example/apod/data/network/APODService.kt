@@ -1,19 +1,39 @@
 package com.example.apod.data.network
 
+import android.util.Log
 import com.example.apod.Constants
+import com.example.apod.Constants.APOD_API_KEY
 import com.example.apod.core.RetrofitHelper
 import com.example.apod.data.model.APODResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class APODService {
+class APODService @Inject constructor(
+    private val api: APIService
+  ){
 
-    private val retrofit = RetrofitHelper.getRetrofit()
-
-    suspend fun getAPODSByCount(query: String): List<APODResponse?>{
+    suspend fun getAPODsByCount(query: String): List<APODResponse?>{
 
         return withContext(Dispatchers.IO){
-            val response = retrofit.create(APIService::class.java).getAPODByCount("apod?api_key=${Constants.APOD_API_KEY}&count=$query")
+            val response = api.getAPODByCount("apod?api_key=${APOD_API_KEY}&count=$query")
+            response.body() ?: emptyList()
+        }
+    }
+
+    suspend fun getAPODsByDate(date: String): APODResponse?{
+
+        return withContext(Dispatchers.IO){
+            val response = api.getAPODByDate("apod?api_key=$APOD_API_KEY&date=$date&concept_tags=True")
+            response.body()
+        }
+    }
+
+    suspend fun getAPODsLastMonth(startDate: String, endDate: String): List <APODResponse?>{
+
+        return withContext(Dispatchers.IO){
+            val response = api.getAPODLastMonth("apod?api_key=$APOD_API_KEY&start_date=$startDate&end_date=$endDate")
+            Log.i("getAPODsLastMonth",response.toString())
             response.body() ?: emptyList()
         }
     }

@@ -1,10 +1,9 @@
 package com.example.apod.domain
 
-import androidx.appcompat.app.AppCompatActivity
 import com.example.apod.data.APODRepository
 import com.example.apod.data.model.APODResponse
+import javax.inject.Inject
 
-class GetApodByCountUseCase: AppCompatActivity() {
-    private val repository = APODRepository()
-    suspend operator fun invoke (query: String):List<APODResponse?> = repository.getAPODsByCount(query)
+class GetApodByCountUseCase @Inject constructor(private val repository : APODRepository){
+    suspend operator fun invoke (query: String) : List<APODResponse?> = repository.getAPODsByCount(query)
 }
