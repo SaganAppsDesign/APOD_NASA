@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.apod.data.model.APODResponse
 import com.example.apod.domain.GetApodByCountUseCase
 import com.example.apod.domain.GetApodByDateUseCase
+import com.example.apod.domain.GetLast50ApodsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -14,11 +15,14 @@ import javax.inject.Inject
 @HiltViewModel
 class ApodViewModel @Inject constructor(
     private val getApodByCountUseCase : GetApodByCountUseCase,
-    private val getApodByDateUseCase : GetApodByDateUseCase
+    private val getApodByDateUseCase : GetApodByDateUseCase,
+    private val getApodLast50UseCase : GetLast50ApodsUseCase
 ): ViewModel() {
 
     val apodByCountLiveData = MutableLiveData <MutableList <APODResponse?>>()
     val apodByDateLiveData = MutableLiveData <APODResponse?>()
+    val apodLast50LiveData = MutableLiveData <MutableList <APODResponse?>>()
+
     val isLoading = MutableLiveData <Boolean>()
 
     @SuppressLint("StaticFieldLeak")
@@ -45,8 +49,16 @@ class ApodViewModel @Inject constructor(
         }
     }
 
-
-
+    fun getApodLast50(startDate: String, endDate: String){
+        viewModelScope.launch {
+            isLoading.postValue(true)
+            val apodData: List <APODResponse?> = getApodLast50UseCase(startDate, endDate)
+            if(apodData.isNotEmpty()) {
+                apodLast50LiveData.postValue(apodData as MutableList<APODResponse?>?)
+            }
+            isLoading.postValue(false)
+        }
+    }
 
 }
 
