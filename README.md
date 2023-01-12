@@ -12,5 +12,5 @@ This Android app allows you to discover the cosmos! Each day a different image o
 - Picasso.
 - Photoview.
 
-![APOD](https://user-images.githubusercontent.com/37807677/211391482-aa610586-55b2-46c4-8f1a-07c9ecf9408c.png)
-![APOD2](https://user-images.githubusercontent.com/37807677/211391635-e84d77dc-fd73-49ad-bc46-77c258cac734.png)
+![Screenshot_1673527810](https://user-images.githubusercontent.com/37807677/212070713-48076d7a-9527-4c4a-8133-889756f8f3ce.png)
+![Screenshot_1673527824](https://user-images.githubusercontent.com/37807677/212070721-aa3902cc-ea9e-4557-8981-ba20a1eb8729.png)
