@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/today"
+        android:icon="@drawable/ic_baseline_satellite_24"
+        android:title="Today´s image"  />
+    <item
+        android:id="@+id/past"
+        android:icon="@drawable/ic_baseline_apps_24"
+        android:title="30 last images" />
+    <item
+        android:id="@+id/random"
+        android:icon="@drawable/ic_baseline_autorenew_24"
+        android:title="Random image" />
+</menu>
