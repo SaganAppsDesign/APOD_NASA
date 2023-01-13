@@ -11,6 +11,7 @@ This Android app allows you to discover the cosmos! Each day a different image o
 - DataBinding.
 - Picasso.
 - Photoview.
+- Lottie.
 
 Play Store:
 https://play.google.com/store/apps/details?id=com.sagan.apod&hl=es
