@@ -6,9 +6,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.sagan.apod.R
 import com.sagan.apod.databinding.FragmentTodayImageBinding
 import com.sagan.apod.ui.view.activities.DetailActivity
 import com.sagan.apod.ui.viewmodel.ApodViewModel
@@ -50,26 +52,42 @@ class TodayImageFragment : Fragment() {
             apodDescrip.addAll(mutableListOf(it?.explanation))
             apodDate.addAll(mutableListOf(it?.date))
             apodMediaType.addAll(mutableListOf(it?.mediaType))
-            Log.i("apodImages[0]", apodImages[0].toString())
 
-            Picasso.get().load(apodImages[0]).into(binding.ivApodFragment)
-            binding.tvTitle.text = apodTitle[0]
-            binding.tvDate.text = apodDate[0]
-            binding.tvMediaType.text = apodMediaType[0]
+            if (it?.mediaType == "other"){
+                Picasso.get().load(R.drawable.no_image).into(binding.ivApodFragment)
+                binding.tvTitle.visibility = View.GONE
+                binding.tvDate.visibility = View.GONE
+                binding.bnShare.visibility = View.GONE
+                binding.tvMediaType.visibility = View.GONE
+                binding.bnShare.isEnabled = false
+                binding.pbAPOD.visibility = View.GONE
 
-            binding.ivApodFragment.setOnClickListener(){
-                passData(apodTitle[0], apodImages[0], apodDescrip[0], apodMediaType[0])
+            } else {
+                binding.tvTitle.text = apodTitle[0]
+                binding.tvDate.text = apodDate[0]
+
+                if(apodMediaType[0] == "video"){
+                    Picasso.get().load(R.drawable.video).into(binding.ivApodFragment)
+                } else {
+                    Picasso.get().load(apodImages[0]).into(binding.ivApodFragment)
+                }
+                binding.tvMediaType.text = apodMediaType[0]
+
+                binding.ivApodFragment.setOnClickListener(){
+                    passData(apodTitle[0], apodImages[0], apodDescrip[0], apodMediaType[0])
+                }
+
+                apodViewModel.isLoading.observe(viewLifecycleOwner){
+                    binding.pbAPOD.isVisible = it
+                }
+
+                binding.bnShare.setOnClickListener {
+                    val shareIntent = Intent(Intent.ACTION_SEND)
+                    shareIntent.type = "text/plain"
+                    shareIntent.putExtra(Intent.EXTRA_TEXT, apodImages[0])
+                    startActivity(Intent.createChooser(shareIntent, "Share APOD"))
+                }
             }
-        }
-        apodViewModel.isLoading.observe(viewLifecycleOwner){
-            binding.pbAPOD.isVisible = it
-        }
-
-        binding.bnShare.setOnClickListener {
-            val shareIntent = Intent(Intent.ACTION_SEND)
-            shareIntent.type = "text/plain"
-            shareIntent.putExtra(Intent.EXTRA_TEXT, apodImages[0])
-            startActivity(Intent.createChooser(shareIntent, "Share APOD"))
         }
 
        return binding.root
