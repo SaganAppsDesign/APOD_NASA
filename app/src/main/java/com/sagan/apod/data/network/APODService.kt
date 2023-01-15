@@ -8,7 +8,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class APODService @Inject constructor(
-    private val api: APIService
+    private val api: ApodAPIClient
   ){
 
     suspend fun getAPODsByCount(query: String): List<APODResponse?>{
