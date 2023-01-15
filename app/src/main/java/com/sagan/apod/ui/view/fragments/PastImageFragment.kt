@@ -29,11 +29,11 @@ class PastImageFragment : Fragment() {
     private val apodDescrip = mutableListOf<String?>()
     private val apodDate = mutableListOf<String?>()
     private val apodMediaType = mutableListOf<String?>()
-    var isLoading = false
+    private val apodThumbnail = mutableListOf<String?>()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
@@ -48,7 +48,6 @@ class PastImageFragment : Fragment() {
         initRecycler()
 
         val formatter = SimpleDateFormat("yyyy-MM-dd")
-        val today = formatter.format(Calendar.getInstance().time)
         val last1 = Calendar.getInstance()
         val last50 = Calendar.getInstance()
         last1.add(Calendar.DAY_OF_YEAR, -1)
@@ -62,25 +61,10 @@ class PastImageFragment : Fragment() {
     }
 
     private fun initRecycler(){
-        adapter = APODAdapter(requireActivity(), apodImages, apodTitle, apodDescrip, apodDate, apodMediaType)
+        adapter = APODAdapter(requireActivity(), apodImages, apodTitle, apodDescrip, apodDate, apodMediaType, apodThumbnail)
         binding.rvAPODs.layoutManager = LinearLayoutManager (requireActivity())
         binding.rvAPODs.adapter = adapter
     }
-
-//    private fun initScrollListener() {
-//        binding.rvAPODs.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-//            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-//                super.onScrolled(recyclerView, dx, dy)
-//                val linearLayoutManager = recyclerView.layoutManager as LinearLayoutManager?
-//                if (!isLoading) {
-//                    if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == 10) {
-//                        loadAPODs("20")
-//                        isLoading = true
-//                    }
-//                }
-//            }
-//        })
-//    }
 
     private fun loadAPODs(lastDay: String, yesterday: String){
         apodViewModel.getApodLast50(lastDay, yesterday)
@@ -92,6 +76,7 @@ class PastImageFragment : Fragment() {
                 apodDescrip.addAll(mutableListOf(it[i]?.explanation))
                 apodDate.addAll(mutableListOf(it[i]?.date))
                 apodMediaType.addAll(mutableListOf(it[i]?.mediaType))
+                apodThumbnail.addAll(mutableListOf(it[i]?.thumbnail_url))
             }
             adapter.notifyDataSetChanged()
 

@@ -14,7 +14,7 @@ class APODService @Inject constructor(
     suspend fun getAPODsByCount(query: String): List<APODResponse?>{
 
         return withContext(Dispatchers.IO){
-            val response = api.getAPODByCount("apod?api_key=${APOD_API_KEY}&count=$query")
+            val response = api.getAPODByCount("apod?api_key=${APOD_API_KEY}&count=$query&thumbs=True")
             response.body() ?: emptyList()
         }
     }
@@ -22,7 +22,7 @@ class APODService @Inject constructor(
     suspend fun getAPODsByDate(date: String): APODResponse?{
 
         return withContext(Dispatchers.IO){
-            val response = api.getAPODByDate("apod?api_key=$APOD_API_KEY&date=$date&concept_tags=True")
+            val response = api.getAPODByDate("apod?api_key=$APOD_API_KEY&date=$date&concept_tags=True&thumbs=True")
             response.body()
         }
     }
@@ -30,7 +30,7 @@ class APODService @Inject constructor(
     suspend fun getAPODsLastMonth(startDate: String, endDate: String): List <APODResponse?>{
 
         return withContext(Dispatchers.IO){
-            val response = api.getAPODLastMonth("apod?api_key=$APOD_API_KEY&start_date=$startDate&end_date=$endDate")
+            val response = api.getAPODLastMonth("apod?api_key=$APOD_API_KEY&start_date=$startDate&end_date=$endDate&thumbs=True")
             Log.i("getAPODsLastMonth",response.toString())
             response.body() ?: emptyList()
         }

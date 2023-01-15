@@ -24,5 +24,8 @@ data class APODResponse (
     var title: String? = null,
     @SerializedName("url")
     @Expose
-    var url: String? = null
+    var url: String? = null,
+    @SerializedName("thumbnail_url")
+    @Expose
+    var thumbnail_url: String? = null
 )

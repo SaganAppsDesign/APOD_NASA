@@ -19,15 +19,17 @@ class APODViewHolder(view: View): RecyclerView.ViewHolder(view) {
     private val tvMediaType: TextView = view.findViewById(R.id.tvMediaType)
     private val share: ImageButton = view.findViewById(R.id.bnShare)
 
-    fun bind(image: String?,
-             title: String?,
-             description: String?,
-             date: String?,
-             mediaType: String?,
-             context: Context){
+    fun bind(
+        image: String?,
+        title: String?,
+        description: String?,
+        date: String?,
+        mediaType: String?,
+        thumbnail: String?,
+        context: Context){
 
         if (mediaType == "video"){
-            Picasso.get().load(R.drawable.apod).into(ivAPOD)
+            Picasso.get().load(thumbnail).into(ivAPOD)
             ivAPOD.scaleType = ImageView.ScaleType.CENTER
            }
         else Picasso.get().load(image).into(ivAPOD)

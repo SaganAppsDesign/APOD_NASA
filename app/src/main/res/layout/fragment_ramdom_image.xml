@@ -31,10 +31,10 @@ tools:context=".ui.view.fragments.RandomImageFragment">
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="match_parent"
-        android:layout_height="450dp"
+        android:layout_height="520dp"
         android:layout_margin="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
         android:background="@color/black"
         app:cardCornerRadius="16dp"
@@ -61,8 +61,7 @@ tools:context=".ui.view.fragments.RandomImageFragment">
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0"
-                />
+                app:layout_constraintVertical_bias="1.0" />
 
             <TextView
                 android:id="@+id/tvTitle"
@@ -129,8 +128,8 @@ tools:context=".ui.view.fragments.RandomImageFragment">
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
                 android:background="@drawable/bg_title"
-                android:src="@drawable/ic_baseline_share_24"
                 android:padding="10dp"
+                android:src="@drawable/ic_baseline_share_24"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
