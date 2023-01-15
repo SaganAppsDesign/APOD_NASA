@@ -1,5 +1,6 @@
 package com.sagan.apod.ui.view.fragments
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -34,19 +35,22 @@ class TodayImageFragment : Fragment() {
         super.onCreate(savedInstanceState)
      }
 
+    @SuppressLint("SimpleDateFormat")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
         ): View {
         binding = FragmentTodayImageBinding.inflate(inflater, container, false)
 
-        val time = Calendar.getInstance().time
         val formatter = SimpleDateFormat("yyyy-MM-dd")
-        val current = formatter.format(time)
+        val today = formatter.format(Calendar.getInstance().time)
+        val last1 = Calendar.getInstance()
+        last1.add(Calendar.DAY_OF_YEAR, -1)
+        val lastDay = formatter.format(last1.time)
 
-        apodViewModel.getApodByDate(current)
+        apodViewModel.getApodByDate(today, lastDay)
+
         apodViewModel.apodByDateLiveData.observe(viewLifecycleOwner){
-            removeApodList()
             apodImages.addAll(mutableListOf(it?.url))
             apodTitle.addAll(mutableListOf(it?.title))
             apodDescrip.addAll(mutableListOf(it?.explanation))
@@ -91,14 +95,6 @@ class TodayImageFragment : Fragment() {
         }
 
        return binding.root
-    }
-
-    private fun removeApodList(){
-        apodImages.clear()
-        apodTitle.clear()
-        apodDescrip.clear()
-        apodDate.clear()
-        apodMediaType.clear()
     }
 
     private fun passData (title: String?, image: String?, description: String?, mediaType: String?){
