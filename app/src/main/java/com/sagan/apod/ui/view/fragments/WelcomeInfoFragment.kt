@@ -12,7 +12,13 @@ class WelcomeInfoFragment: DialogFragment() {
             val builder = AlertDialog.Builder(it, R.style.AlertDialogCustom)
             val inflater = requireActivity().layoutInflater
             builder.setView(inflater.inflate(R.layout.info_dialog, null))
-                .setPositiveButton("¡Vamos!"
+                .setNegativeButton(""
+                ) { _, _ ->
+                }
+                .setPositiveButton("Let´s GO!"
+                ) { _, _ ->
+                }
+                .setNeutralButton(""
                 ) { _, _ ->
                 }
             builder.create()

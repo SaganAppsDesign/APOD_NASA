@@ -38,11 +38,16 @@ class ApodViewModel @Inject constructor(
         }
      }
 
-    fun getApodByDate(date: String){
+    fun getApodByDate(date: String, date2: String){
         viewModelScope.launch {
             isLoading.postValue(true)
-            val apodData: APODResponse? = getApodByDateUseCase(date)
+            var apodData: APODResponse? = getApodByDateUseCase(date)
             if(apodData != null){
+                apodByDateLiveData.postValue(apodData)
+                isLoading.postValue(false)
+            }
+            else{
+                apodData = getApodByDateUseCase(date2)
                 apodByDateLiveData.postValue(apodData)
                 isLoading.postValue(false)
             }

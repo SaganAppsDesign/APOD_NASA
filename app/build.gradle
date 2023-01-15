@@ -9,10 +9,10 @@ android {
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.example.reccyclerview"
+        applicationId "com.sagan.apod"
         minSdk 21
         targetSdk 33
-        versionCode 1
+        versionCode 7
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
