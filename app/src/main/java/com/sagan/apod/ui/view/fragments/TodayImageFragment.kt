@@ -48,7 +48,6 @@ class TodayImageFragment : Fragment() {
         val lastDay = formatter.format(last1.time)
 
         apodViewModel.getApodByDate(today, lastDay)
-
         apodViewModel.apodByDateLiveData.observe(viewLifecycleOwner){
             apodImages.addAll(mutableListOf(it?.url))
             apodTitle.addAll(mutableListOf(it?.title))

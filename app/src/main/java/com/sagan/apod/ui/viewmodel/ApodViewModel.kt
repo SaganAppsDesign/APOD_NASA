@@ -27,7 +27,6 @@ class ApodViewModel @Inject constructor(
     val isLoading = MutableLiveData <Boolean>()
 
     @SuppressLint("StaticFieldLeak")
-
     fun getApodByCount(query: String){
         viewModelScope.launch {
             isLoading.postValue(true)
@@ -55,7 +54,7 @@ class ApodViewModel @Inject constructor(
         }
     }
 
-    fun getApodLast50(startDate: String, endDate: String){
+    fun getApodLast30(startDate: String, endDate: String){
         viewModelScope.launch {
             isLoading.postValue(true)
             val apodData: List <APOD?> = getApodLast50UseCase(startDate, endDate)

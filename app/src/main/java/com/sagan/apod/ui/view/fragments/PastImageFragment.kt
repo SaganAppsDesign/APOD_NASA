@@ -1,6 +1,7 @@
 package com.sagan.apod.ui.view.fragments
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -34,6 +35,15 @@ class PastImageFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val formatter = SimpleDateFormat("yyyy-MM-dd")
+        val last1 = Calendar.getInstance()
+        val last50 = Calendar.getInstance()
+        last1.add(Calendar.DAY_OF_YEAR, -1)
+        last50.add(Calendar.DAY_OF_YEAR, -30)
+        val lastDay = formatter.format(last50.time)
+        val yesterday = formatter.format(last1.time)
+        loadAPODs(lastDay, yesterday)
+
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
@@ -46,17 +56,6 @@ class PastImageFragment : Fragment() {
         binding = FragmentPastImageBinding.inflate(layoutInflater)
 
         initRecycler()
-
-        val formatter = SimpleDateFormat("yyyy-MM-dd")
-        val last1 = Calendar.getInstance()
-        val last50 = Calendar.getInstance()
-        last1.add(Calendar.DAY_OF_YEAR, -1)
-        last50.add(Calendar.DAY_OF_YEAR, -30)
-        val lastDay = formatter.format(last50.time)
-        val yesterday = formatter.format(last1.time)
-
-        loadAPODs(lastDay, yesterday)
-
         return binding.root
     }
 
@@ -67,7 +66,7 @@ class PastImageFragment : Fragment() {
     }
 
     private fun loadAPODs(lastDay: String, yesterday: String){
-        apodViewModel.getApodLast50(lastDay, yesterday)
+        apodViewModel.getApodLast30(lastDay, yesterday)
         apodViewModel.apodLast50LiveData.observe(requireActivity()){
             removeApodList()
             for (i in 0 until it.size){

@@ -35,8 +35,12 @@ class APODRepository @Inject constructor(
         apodDAo.insertAll(apods)
     }
 
-    suspend fun deleteAPODLast30FromDataBase(apods: List<ApodEntity>){
-        apodDAo.delete(apods)
+    suspend fun deleteAPODLast30FromDataBase(){
+        apodDAo.delete()
+    }
+
+    suspend fun EmptyDataBase(): Boolean{
+        return apodDAo.isEmpty()
     }
 }
 
