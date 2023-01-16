@@ -31,7 +31,6 @@ class APODService @Inject constructor(
 
         return withContext(Dispatchers.IO){
             val response = api.getAPODLast30("apod?api_key=$APOD_API_KEY&start_date=$startDate&end_date=$endDate&thumbs=True")
-            Log.i("getAPODsLastMonth",response.toString())
             response.body() ?: emptyList()
         }
     }

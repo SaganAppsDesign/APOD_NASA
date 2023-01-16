@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,16 +12,25 @@ import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.sagan.apod.data.APODRepository
 import com.sagan.apod.databinding.FragmentPastImageBinding
 import com.sagan.apod.ui.view.recyclerview.APODAdapter
 import com.sagan.apod.ui.viewmodel.ApodViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.*
+import javax.inject.Inject
 
 @AndroidEntryPoint
-class PastImageFragment : Fragment() {
+class PastImageFragment:Fragment(){
+    companion object {
+        val repository : APODRepository? = null
+    }
 
     private lateinit var binding : FragmentPastImageBinding
     private lateinit var adapter: APODAdapter
@@ -43,7 +53,7 @@ class PastImageFragment : Fragment() {
         val lastDay = formatter.format(last50.time)
         val yesterday = formatter.format(last1.time)
         loadAPODs(lastDay, yesterday)
-
+        Log.i("onCreate","onCreate")
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
@@ -92,4 +102,5 @@ class PastImageFragment : Fragment() {
         apodDate.clear()
         apodMediaType.clear()
     }
+
 }

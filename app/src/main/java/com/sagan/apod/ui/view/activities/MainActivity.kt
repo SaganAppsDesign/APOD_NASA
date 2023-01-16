@@ -2,24 +2,37 @@ package com.sagan.apod.ui.view.activities
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.sagan.apod.R
+import com.sagan.apod.data.APODRepository
 import com.sagan.apod.databinding.ActivityMainBinding
 import com.sagan.apod.ui.view.fragments.PastImageFragment
 import com.sagan.apod.ui.view.fragments.RandomImageFragment
 import com.sagan.apod.ui.view.fragments.TodayImageFragment
 import com.sagan.apod.ui.view.fragments.WelcomeInfoFragment
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity: AppCompatActivity() {
 
     private lateinit var binding : ActivityMainBinding
+
+    @Inject
+    lateinit var repository: APODRepository
 
     @SuppressLint("SimpleDateFormat", "NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        //Borrado inicial de la BBDD local
+        lifecycleScope.launch {
+           repository.deleteAPODLast30FromDataBase()
+        }
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -46,6 +59,13 @@ class MainActivity : AppCompatActivity() {
                 else -> {false}
             }
         }
+    }
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.i("onDestroy() Activity","onDestroy()")
+
+
+
     }
 
     @Deprecated("Deprecated in Java")
