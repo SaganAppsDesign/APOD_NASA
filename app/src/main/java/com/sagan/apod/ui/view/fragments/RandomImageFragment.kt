@@ -27,6 +27,7 @@ class RandomImageFragment : Fragment() {
     private val apodDescrip = mutableListOf<String?>()
     private val apodDate = mutableListOf<String?>()
     private val apodMediaType = mutableListOf<String?>()
+    private val apodThumbnail = mutableListOf<String?>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +48,7 @@ class RandomImageFragment : Fragment() {
             apodDescrip.addAll(mutableListOf(it[0]?.explanation))
             apodDate.addAll(mutableListOf(it[0]?.date))
             apodMediaType.addAll(mutableListOf(it[0]?.mediaType))
+            apodThumbnail.addAll(mutableListOf(it[0]?.thumbnail_url))
 
             if (it[0]?.mediaType == "other"){
                 Picasso.get().load(R.drawable.no_image).into(binding.ivApodFragment)
@@ -62,7 +64,7 @@ class RandomImageFragment : Fragment() {
                 binding.tvDate.text = apodDate[0]
 
                 if(apodMediaType[0] == "video"){
-                    Picasso.get().load(R.drawable.video).into(binding.ivApodFragment)
+                    Picasso.get().load(apodThumbnail[0]).into(binding.ivApodFragment)
                 } else {
                     Picasso.get().load(apodImages[0]).into(binding.ivApodFragment)
                 }

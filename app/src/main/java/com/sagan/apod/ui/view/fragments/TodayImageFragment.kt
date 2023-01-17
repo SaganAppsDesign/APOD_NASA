@@ -3,11 +3,9 @@ package com.sagan.apod.ui.view.fragments
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -30,8 +28,9 @@ class TodayImageFragment : Fragment() {
     private val apodDescrip = mutableListOf<String?>()
     private val apodDate = mutableListOf<String?>()
     private val apodMediaType = mutableListOf<String?>()
+    private val apodThumbnail = mutableListOf<String?>()
 
-     override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
      }
 
@@ -49,13 +48,13 @@ class TodayImageFragment : Fragment() {
         val lastDay = formatter.format(last1.time)
 
         apodViewModel.getApodByDate(today, lastDay)
-
         apodViewModel.apodByDateLiveData.observe(viewLifecycleOwner){
             apodImages.addAll(mutableListOf(it?.url))
             apodTitle.addAll(mutableListOf(it?.title))
             apodDescrip.addAll(mutableListOf(it?.explanation))
             apodDate.addAll(mutableListOf(it?.date))
             apodMediaType.addAll(mutableListOf(it?.mediaType))
+            apodThumbnail.addAll(mutableListOf(it?.thumbnail_url))
 
             if (it?.mediaType == "other"){
                 Picasso.get().load(R.drawable.no_image).into(binding.ivApodFragment)
@@ -71,7 +70,7 @@ class TodayImageFragment : Fragment() {
                 binding.tvDate.text = apodDate[0]
 
                 if(apodMediaType[0] == "video"){
-                    Picasso.get().load(R.drawable.video).into(binding.ivApodFragment)
+                    Picasso.get().load(apodThumbnail[0]).into(binding.ivApodFragment)
                 } else {
                     Picasso.get().load(apodImages[0]).into(binding.ivApodFragment)
                 }

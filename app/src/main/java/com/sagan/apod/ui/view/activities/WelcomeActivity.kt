@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import com.sagan.apod.BuildConfig
 import com.sagan.apod.databinding.ActivitySplashBinding
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -19,6 +20,8 @@ class SplashActivity @Inject constructor() : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.tvVersion.text = "Version: ${BuildConfig.VERSION_NAME}"
 
         Handler().postDelayed({
             val intent = Intent(this, MainActivity::class.java)

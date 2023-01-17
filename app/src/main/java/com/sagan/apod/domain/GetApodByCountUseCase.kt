@@ -1,9 +1,10 @@
 package com.sagan.apod.domain
 
 import com.sagan.apod.data.APODRepository
-import com.sagan.apod.data.model.APODResponse
+import com.sagan.apod.data.model.APODModel
+import com.sagan.apod.domain.model.APOD
 import javax.inject.Inject
 
 class GetApodByCountUseCase @Inject constructor(private val repository : APODRepository){
-    suspend operator fun invoke (query: String) : List<APODResponse?> = repository.getAPODsByCount(query)
+    suspend operator fun invoke (query: String) : List<APODModel?> = repository.getAPODsByCountFromApi(query)
 }

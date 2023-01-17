@@ -1,6 +1,6 @@
 package com.sagan.apod.di
 
-import com.sagan.apod.data.network.APIService
+import com.sagan.apod.data.network.ApodAPIClient
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,8 +24,8 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideApiService(retrofit: Retrofit): APIService {
-        return retrofit.create(APIService::class.java)
+    fun provideApiService(retrofit: Retrofit): ApodAPIClient {
+        return retrofit.create(ApodAPIClient::class.java)
     }
 
 }
