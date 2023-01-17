@@ -7,7 +7,7 @@
     <item
         android:id="@+id/past"
         android:icon="@drawable/ic_baseline_apps_24"
-        android:title="Every past images" />
+        android:title="30 last images" />
     <item
         android:id="@+id/random"
         android:icon="@drawable/ic_baseline_autorenew_24"
