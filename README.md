@@ -4,15 +4,15 @@
 
 This Android app allows you to discover the cosmos! Each day a different image or photograph of our fascinating universe is featured, along with a brief explanation written by a professional astronomer.
 
-- Kotlin. 
-- MVVM.
-- Dagger Hilt.
-- Room.
-- Clean Architecture.
-- DataBinding.
-- Picasso.
-- Photoview.
-- Lottie.
+- Kotlin 
+- Clean Architecture
+- MVVM
+- Dagger Hilt
+- Room
+- DataBinding
+- Picasso
+- Photoview
+- Lottie
 
 Play Store:
 https://play.google.com/store/apps/details?id=com.sagan.apod&hl=es
