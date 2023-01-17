@@ -6,7 +6,7 @@ import com.sagan.apod.data.databse.entities.ApodEntity
 @Dao
 interface ApodDao {
 
-    @Query("SELECT * FROM apod_table ORDER BY date DESC")
+    @Query("SELECT * FROM apod_table ORDER BY date ASC")
     suspend fun getAll(): List<ApodEntity>
 
     @Insert(onConflict =  OnConflictStrategy.REPLACE)

@@ -20,27 +20,7 @@ class DetailActivity : YouTubeBaseActivity(){
         super.onCreate(savedInstanceState)
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        val intent = intent
-        val title = intent.getStringExtra("title")
-        image = intent.getStringExtra("image")!!.toString()
-
-        val description = intent.getStringExtra("description")
-        val mediaType = intent.getStringExtra("mediaType")
-        binding.tvTitle.text = title
-        binding.tvDescription.text = description
-
-        binding.tvTitle.typeface = ResourcesCompat.getFont(this, R.font.monserrat_alternates)
-        binding.tvDescription.typeface = ResourcesCompat.getFont(this, R.font.monserrat_alternates)
-
-        if(mediaType=="image"){
-            Picasso.get().load(image).into(binding.ivImage)
-            binding.YouTubeView.visibility = View.GONE
-        } else {
-            initYouTubePlayer()
-            binding.YouTubeView.visibility = View.VISIBLE
-            binding.ivImage.visibility = View.GONE
-        }
+        initViews()
     }
 
     private fun initYouTubePlayer(){
@@ -64,5 +44,27 @@ class DetailActivity : YouTubeBaseActivity(){
                 Log.i("p0", p0.toString())
             }
         })
+    }
+
+    private fun initViews(){
+        val intent = intent
+        val title = intent.getStringExtra("title")
+        image = intent.getStringExtra("image")!!.toString()
+        val description = intent.getStringExtra("description")
+        val mediaType = intent.getStringExtra("mediaType")
+
+        binding.tvTitle.text = title
+        binding.tvDescription.text = description
+        binding.tvTitle.typeface = ResourcesCompat.getFont(this, R.font.monserrat_alternates)
+        binding.tvDescription.typeface = ResourcesCompat.getFont(this, R.font.monserrat_alternates)
+
+        if(mediaType=="image"){
+            Picasso.get().load(image).into(binding.ivImage)
+            binding.YouTubeView.visibility = View.GONE
+        } else {
+            initYouTubePlayer()
+            binding.YouTubeView.visibility = View.VISIBLE
+            binding.ivImage.visibility = View.GONE
+        }
     }
 }

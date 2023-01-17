@@ -12,19 +12,10 @@ class GetLast30ApodsUseCase @Inject constructor(private val repository : APODRep
     suspend operator fun invoke (startDate: String, endDate: String) : List <APOD?> {
        return if(repository.EmptyDataBase()){
             val apods = repository.getAPODLast30FromApi(startDate, endDate)
-            repository.insertAPODLast30FromDataBase(apods.map { it!!.toDataBase()})
+            repository.insertAPODLast30FromDataBase(apods.map{it!!.toDataBase()})
             apods
         } else {
             repository.getAPODLast30FromDataBase()
         }
-
-//
-//        return if(apods.isNotEmpty()){
-//            repository.deleteAPODLast30FromDataBase()
-//            repository.insertAPODLast30FromDataBase(apods.map { it!!.toDataBase()})
-//            apods
-//        } else{
-//            repository.getAPODLast30FromDataBase()
-//        }
     }
 }

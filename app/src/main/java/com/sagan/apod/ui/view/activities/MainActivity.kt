@@ -2,7 +2,6 @@ package com.sagan.apod.ui.view.activities
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -28,20 +27,34 @@ class MainActivity: AppCompatActivity() {
     @SuppressLint("SimpleDateFormat", "NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        //Borrado inicial de la BBDD local
-        lifecycleScope.launch {
-           repository.deleteAPODLast30FromDataBase()
-        }
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        deleteLocalDDBB()
+        initBottomMenu()
         loadFragment(TodayImageFragment())
 
         val welcomeDialog = WelcomeInfoFragment()
         welcomeDialog.show(supportFragmentManager, "infoDialog")
 
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onBackPressed() {}
+
+    private  fun loadFragment(fragment: Fragment){
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.container,fragment)
+        transaction.commit()
+    }
+
+    private fun deleteLocalDDBB(){
+        lifecycleScope.launch {
+            repository.deleteTable()
+        }
+    }
+
+    private fun initBottomMenu(){
         binding.bnMainActivity.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.today -> {
@@ -60,23 +73,6 @@ class MainActivity: AppCompatActivity() {
             }
         }
     }
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.i("onDestroy() Activity","onDestroy()")
-
-
-
-    }
-
-    @Deprecated("Deprecated in Java")
-    override fun onBackPressed() {}
-
-    private  fun loadFragment(fragment: Fragment){
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.container,fragment)
-        transaction.commit()
-    }
-
 }
 
 

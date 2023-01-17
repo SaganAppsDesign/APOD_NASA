@@ -28,9 +28,6 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class PastImageFragment:Fragment(){
-    companion object {
-        val repository : APODRepository? = null
-    }
 
     private lateinit var binding : FragmentPastImageBinding
     private lateinit var adapter: APODAdapter

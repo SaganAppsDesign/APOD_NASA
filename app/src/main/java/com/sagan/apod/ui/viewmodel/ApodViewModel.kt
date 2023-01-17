@@ -21,7 +21,7 @@ class ApodViewModel @Inject constructor(
 ): ViewModel() {
 
     val apodByCountLiveData = MutableLiveData <MutableList <APODModel?>>()
-    val apodByDateLiveData = MutableLiveData <APODModel?>()
+    val apodByDateLiveData = MutableLiveData <APOD?>()
     val apodLast50LiveData = MutableLiveData <MutableList <APOD?>>()
 
     val isLoading = MutableLiveData <Boolean>()
@@ -41,7 +41,7 @@ class ApodViewModel @Inject constructor(
     fun getApodByDate(date: String, date2: String){
         viewModelScope.launch {
             isLoading.postValue(true)
-            var apodData: APODModel? = getApodByDateUseCase(date)
+            var apodData: APOD? = getApodByDateUseCase(date)
             if(apodData != null){
                 apodByDateLiveData.postValue(apodData)
                 isLoading.postValue(false)
@@ -64,6 +64,5 @@ class ApodViewModel @Inject constructor(
             isLoading.postValue(false)
         }
     }
-
 }
 
