@@ -1,12 +1,13 @@
 # APOD
 
-Astronomical Picture Of the Day NASA ( 🚧🚧 Under Construction 🚧🚧):
+🌟🌟🌟Astronomical Picture Of the Day NASA🌟🌟🌟 :
 
 This Android app allows you to discover the cosmos! Each day a different image or photograph of our fascinating universe is featured, along with a brief explanation written by a professional astronomer.
 
 - Kotlin. 
 - MVVM.
 - Dagger Hilt.
+- Room.
 - Clean Architecture.
 - DataBinding.
 - Picasso.
