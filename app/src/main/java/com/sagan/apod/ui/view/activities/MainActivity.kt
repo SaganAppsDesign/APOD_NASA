@@ -1,10 +1,13 @@
 package com.sagan.apod.ui.view.activities
 
 import android.annotation.SuppressLint
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import com.sagan.apod.ConnectionReceiver
 import com.sagan.apod.R
 import com.sagan.apod.data.APODRepository
 import com.sagan.apod.databinding.ActivityMainBinding
@@ -14,6 +17,7 @@ import com.sagan.apod.ui.view.fragments.TodayImageFragment
 import com.sagan.apod.ui.view.fragments.WelcomeInfoFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import okhttp3.OkHttpClient
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -24,6 +28,9 @@ class MainActivity: AppCompatActivity() {
     @Inject
     lateinit var repository: APODRepository
 
+    @Inject
+    lateinit var br: ConnectionReceiver
+
     @SuppressLint("SimpleDateFormat", "NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,10 +40,8 @@ class MainActivity: AppCompatActivity() {
         deleteLocalDDBB()
         initBottomMenu()
         loadFragment(TodayImageFragment())
-
-        val welcomeDialog = WelcomeInfoFragment()
-        welcomeDialog.show(supportFragmentManager, "infoDialog")
-
+        welcomeDialog()
+        activeReceiver()
     }
 
     @Deprecated("Deprecated in Java")
@@ -72,6 +77,17 @@ class MainActivity: AppCompatActivity() {
                 else -> {false}
             }
         }
+    }
+
+    private fun activeReceiver(){
+        val networkIntentFilter = IntentFilter()
+        networkIntentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION)
+        registerReceiver(br, networkIntentFilter)
+    }
+
+    private fun welcomeDialog(){
+        val welcomeDialog = WelcomeInfoFragment()
+        welcomeDialog.show(supportFragmentManager, "infoDialog")
     }
 }
 
