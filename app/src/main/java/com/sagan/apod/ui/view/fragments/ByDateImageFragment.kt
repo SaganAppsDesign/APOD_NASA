@@ -3,6 +3,7 @@ package com.sagan.apod.ui.view.fragments
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,18 +11,17 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.sagan.apod.R
-import com.sagan.apod.databinding.FragmentTodayImageBinding
+import com.sagan.apod.databinding.FragmentByDateImageBinding
 import com.sagan.apod.ui.view.activities.DetailActivity
 import com.sagan.apod.ui.viewmodel.ApodViewModel
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
-import java.text.SimpleDateFormat
 import java.util.*
 
 @AndroidEntryPoint
-class TodayImageFragment : Fragment() {
+class ByDateImageFragment : Fragment() {
 
-    private lateinit var binding : FragmentTodayImageBinding
+    private lateinit var binding : FragmentByDateImageBinding
     private val apodViewModel: ApodViewModel by viewModels()
     private val apodImages = mutableListOf<String?>()
     private val apodTitle = mutableListOf<String?>()
@@ -29,26 +29,55 @@ class TodayImageFragment : Fragment() {
     private val apodDate = mutableListOf<String?>()
     private val apodMediaType = mutableListOf<String?>()
     private val apodThumbnail = mutableListOf<String?>()
+    var today = "2000-01-01"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-     }
+       }
 
     @SuppressLint("SimpleDateFormat")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-        ): View {
-        binding = FragmentTodayImageBinding.inflate(inflater, container, false)
+    ): View {
+        binding = FragmentByDateImageBinding.inflate(inflater, container, false)
+        today = binding.etDatePicker.text.toString()
+        initViewModel()
+        binding.etDatePicker.setOnClickListener{
+            showDatePickerDialog()
+        }
 
-        val formatter = SimpleDateFormat("yyyy-MM-dd")
-        val today = formatter.format(Calendar.getInstance().time)
-        val last1 = Calendar.getInstance()
-        last1.add(Calendar.DAY_OF_YEAR, -1)
-        val lastDay = formatter.format(last1.time)
+        binding.btDataPicker.setOnClickListener{
+            initViewModel()
+        }
+        return binding.root
+    }
 
-        apodViewModel.getTodayApod(today, lastDay)
+    private fun passData (title: String?, image: String?, description: String?, mediaType: String?){
+        val intent = Intent(context, DetailActivity::class.java)
+        intent.putExtra("title", title)
+        intent.putExtra("image", image)
+        intent.putExtra("description", description)
+        intent.putExtra("mediaType", mediaType)
+
+        context?.startActivity(intent)
+    }
+
+    private fun showDatePickerDialog() {
+        val datePicker = DatePickerFragment { year, month, day -> onDateSelected(year, month, day) }
+        datePicker.show(requireActivity().supportFragmentManager, "datePicker")
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun onDateSelected(year: Int, month: Int, day: Int){
+        this.binding.etDatePicker.setText("$year-${month+1}-$day")
+    }
+
+    private fun initViewModel(){
+        today = binding.etDatePicker.text.toString()
+        apodViewModel.getApodByDate(today)
         apodViewModel.apodByDateLiveData.observe(viewLifecycleOwner){
+            removeApodList()
             apodImages.addAll(mutableListOf(it?.url))
             apodTitle.addAll(mutableListOf(it?.title))
             apodDescrip.addAll(mutableListOf(it?.explanation))
@@ -92,17 +121,12 @@ class TodayImageFragment : Fragment() {
                 }
             }
         }
-
-       return binding.root
     }
-
-    private fun passData (title: String?, image: String?, description: String?, mediaType: String?){
-        val intent = Intent(context, DetailActivity::class.java)
-        intent.putExtra("title", title)
-        intent.putExtra("image", image)
-        intent.putExtra("description", description)
-        intent.putExtra("mediaType", mediaType)
-
-        context?.startActivity(intent)
-     }
+    private fun removeApodList(){
+        apodImages.clear()
+        apodTitle.clear()
+        apodDescrip.clear()
+        apodDate.clear()
+        apodMediaType.clear()
+    }
 }

@@ -11,10 +11,7 @@ import com.sagan.apod.ConnectionReceiver
 import com.sagan.apod.R
 import com.sagan.apod.data.APODRepository
 import com.sagan.apod.databinding.ActivityMainBinding
-import com.sagan.apod.ui.view.fragments.PastImageFragment
-import com.sagan.apod.ui.view.fragments.RandomImageFragment
-import com.sagan.apod.ui.view.fragments.TodayImageFragment
-import com.sagan.apod.ui.view.fragments.WelcomeInfoFragment
+import com.sagan.apod.ui.view.fragments.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
@@ -71,6 +68,10 @@ class MainActivity: AppCompatActivity() {
                 }
                 R.id.random -> {
                     loadFragment(RandomImageFragment())
+                    true
+                }
+                R.id.byDate -> {
+                    loadFragment(ByDateImageFragment())
                     true
                 }
                 else -> {false}
