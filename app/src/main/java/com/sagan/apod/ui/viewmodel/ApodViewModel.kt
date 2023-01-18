@@ -46,7 +46,7 @@ class ApodViewModel @Inject constructor(
                 apodByDateLiveData.postValue(apodData)
                 isLoading.postValue(false)
             }
-            else{
+            else {
                 apodData = getApodByDateUseCase(date2)
                 apodByDateLiveData.postValue(apodData)
                 isLoading.postValue(false)

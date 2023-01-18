@@ -28,6 +28,10 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
+            android:name="com.sagan.apod.ui.view.activities.OffLineScreenActivity"
+            android:screenOrientation="portrait"
+            android:exported="false" />
+        <activity
             android:name="com.sagan.apod.ui.view.activities.SplashActivity"
             android:exported="true"
             android:screenOrientation="portrait">

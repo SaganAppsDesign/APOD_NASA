@@ -6,6 +6,8 @@
         written by a professional astronomer.</string>
     <string name="contact_info">Developer email contact: <a href="mailto:sagan.apps.design@gmail.com">\nsagan.apps.design@gmail.com</a></string>
     <string name="my_link"><a href="https://github.com/SaganAppsDesign">Click me!</a></string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
 
 

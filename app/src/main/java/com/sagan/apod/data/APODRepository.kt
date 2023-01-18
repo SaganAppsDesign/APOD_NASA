@@ -21,20 +21,10 @@ class APODRepository @Inject constructor(
         return api.getAPODsByCount(query)
     }
 
-
     suspend fun getAPODByDateFromApi(date: String): APOD {
         val response =  api.getAPODsByDate(date)
         return response?.toDomain() ?: APOD("")
     }
-
-//    suspend fun getAPODByDateDataBase(): APOD{
-//        val response = apodDAO.getCurrentApod()
-//        return response.toDomain()
-//    }
-//
-//    suspend fun insertAPODByDateFromDataBase(apod: ApodEntity){
-//        apodDAO.insertCurrentApod(apod)
-//    }
 
     suspend fun getAPODLast30FromApi(startDate: String, endDate: String): List <APOD?>{
         val response = api.getAPODsLast30(startDate, endDate)
@@ -53,15 +43,8 @@ class APODRepository @Inject constructor(
     suspend fun deleteTable(){
         apodDAO.delete()
     }
-    suspend fun EmptyDataBase(): Boolean{
+    suspend fun emptyDataBase(): Boolean{
         return apodDAO.isEmpty()
     }
-
-
-
-
-
-
-
 }
 

@@ -41,13 +41,12 @@ class MainActivity: AppCompatActivity() {
         initBottomMenu()
         loadFragment(TodayImageFragment())
         welcomeDialog()
-        activeReceiver()
     }
 
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {}
 
-    private  fun loadFragment(fragment: Fragment){
+    private fun loadFragment(fragment: Fragment){
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.container,fragment)
         transaction.commit()
@@ -77,12 +76,6 @@ class MainActivity: AppCompatActivity() {
                 else -> {false}
             }
         }
-    }
-
-    private fun activeReceiver(){
-        val networkIntentFilter = IntentFilter()
-        networkIntentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION)
-        registerReceiver(br, networkIntentFilter)
     }
 
     private fun welcomeDialog(){
