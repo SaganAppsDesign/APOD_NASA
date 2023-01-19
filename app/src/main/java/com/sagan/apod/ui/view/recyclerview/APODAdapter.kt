@@ -30,7 +30,6 @@ class APODAdapter(private val context: Context,
         if(mediaType != "other"){
             holder.bind(image, title, description, date, mediaType, thumbnail, context)
         }
-
       }
 
     override fun getItemCount(): Int = images.size

@@ -41,7 +41,7 @@ class APODViewHolder(view: View): RecyclerView.ViewHolder(view) {
         share.setOnClickListener{
             val shareIntent = Intent(Intent.ACTION_SEND)
             shareIntent.type = "text/plain"
-            shareIntent.putExtra(Intent.EXTRA_TEXT, image)
+            shareIntent.putExtra(Intent.EXTRA_TEXT, "$title -> $image")
             context.startActivity(Intent.createChooser(shareIntent, "Share APOD"))
         }
 

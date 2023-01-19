@@ -118,7 +118,7 @@ class ByDateImageFragment : Fragment() {
                     binding.bnShare.setOnClickListener {
                         val shareIntent = Intent(Intent.ACTION_SEND)
                         shareIntent.type = "text/plain"
-                        shareIntent.putExtra(Intent.EXTRA_TEXT, apodImages[0])
+                        shareIntent.putExtra(Intent.EXTRA_TEXT, "${apodTitle[0]} -> ${apodImages[0]}")
                         startActivity(Intent.createChooser(shareIntent, "Share APOD"))
                     }
                 }
