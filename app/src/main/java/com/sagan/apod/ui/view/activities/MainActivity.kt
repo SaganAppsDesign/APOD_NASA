@@ -1,19 +1,20 @@
 package com.sagan.apod.ui.view.activities
 
 import android.annotation.SuppressLint
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import com.sagan.apod.ConnectionReceiver
 import com.sagan.apod.R
 import com.sagan.apod.data.APODRepository
 import com.sagan.apod.databinding.ActivityMainBinding
-import com.sagan.apod.ui.view.fragments.PastImageFragment
-import com.sagan.apod.ui.view.fragments.RandomImageFragment
-import com.sagan.apod.ui.view.fragments.TodayImageFragment
-import com.sagan.apod.ui.view.fragments.WelcomeInfoFragment
+import com.sagan.apod.ui.view.fragments.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import okhttp3.OkHttpClient
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -24,6 +25,9 @@ class MainActivity: AppCompatActivity() {
     @Inject
     lateinit var repository: APODRepository
 
+    @Inject
+    lateinit var br: ConnectionReceiver
+
     @SuppressLint("SimpleDateFormat", "NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,16 +37,13 @@ class MainActivity: AppCompatActivity() {
         deleteLocalDDBB()
         initBottomMenu()
         loadFragment(TodayImageFragment())
-
-        val welcomeDialog = WelcomeInfoFragment()
-        welcomeDialog.show(supportFragmentManager, "infoDialog")
-
+        welcomeDialog()
     }
 
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {}
 
-    private  fun loadFragment(fragment: Fragment){
+    private fun loadFragment(fragment: Fragment){
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.container,fragment)
         transaction.commit()
@@ -69,9 +70,18 @@ class MainActivity: AppCompatActivity() {
                     loadFragment(RandomImageFragment())
                     true
                 }
+                R.id.byDate -> {
+                    loadFragment(ByDateImageFragment())
+                    true
+                }
                 else -> {false}
             }
         }
+    }
+
+    private fun welcomeDialog(){
+        val welcomeDialog = WelcomeInfoFragment()
+        welcomeDialog.show(supportFragmentManager, "infoDialog")
     }
 }
 

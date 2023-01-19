@@ -47,7 +47,11 @@ class TodayImageFragment : Fragment() {
         last1.add(Calendar.DAY_OF_YEAR, -1)
         val lastDay = formatter.format(last1.time)
 
-        apodViewModel.getApodByDate(today, lastDay)
+        binding.animationView.isVisible = true
+        binding.animationView.playAnimation()
+        binding.animationView.repeatCount = 10000
+
+        apodViewModel.getTodayApod(today, lastDay)
         apodViewModel.apodByDateLiveData.observe(viewLifecycleOwner){
             apodImages.addAll(mutableListOf(it?.url))
             apodTitle.addAll(mutableListOf(it?.title))
@@ -92,7 +96,6 @@ class TodayImageFragment : Fragment() {
                 }
             }
         }
-
        return binding.root
     }
 
@@ -102,7 +105,6 @@ class TodayImageFragment : Fragment() {
         intent.putExtra("image", image)
         intent.putExtra("description", description)
         intent.putExtra("mediaType", mediaType)
-
         context?.startActivity(intent)
      }
 }

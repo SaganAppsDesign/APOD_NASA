@@ -38,7 +38,7 @@ class ApodViewModel @Inject constructor(
         }
      }
 
-    fun getApodByDate(date: String, date2: String){
+    fun getTodayApod (date: String, date2: String){
         viewModelScope.launch {
             isLoading.postValue(true)
             var apodData: APOD? = getApodByDateUseCase(date)
@@ -46,8 +46,24 @@ class ApodViewModel @Inject constructor(
                 apodByDateLiveData.postValue(apodData)
                 isLoading.postValue(false)
             }
-            else{
+            else {
                 apodData = getApodByDateUseCase(date2)
+                apodByDateLiveData.postValue(apodData)
+                isLoading.postValue(false)
+            }
+        }
+    }
+
+    fun getApodByDate(date: String){
+        viewModelScope.launch {
+            isLoading.postValue(true)
+            var apodData: APOD? = getApodByDateUseCase(date)
+            if(apodData != null){
+                apodByDateLiveData.postValue(apodData)
+                isLoading.postValue(false)
+            }
+            else {
+                apodData = getApodByDateUseCase("2020-01-01")
                 apodByDateLiveData.postValue(apodData)
                 isLoading.postValue(false)
             }

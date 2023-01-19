@@ -12,8 +12,8 @@ android {
         applicationId "com.sagan.apod"
         minSdk 21
         targetSdk 33
-        versionCode 9
-        versionName "1.2.0"
+        versionCode 10
+        versionName "1.2.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -67,6 +67,10 @@ dependencies {
     //Retrofit
     implementation "com.squareup.retrofit2:retrofit:2.9.0"
     implementation "com.squareup.retrofit2:converter-gson:2.9.0"
+    //okhttp3
+    implementation(platform("com.squareup.okhttp3:okhttp-bom:4.10.0"))
+    implementation("com.squareup.okhttp3:okhttp")
+    implementation("com.squareup.okhttp3:logging-interceptor")
     //Picasso
     implementation "com.squareup.picasso:picasso:2.71828"
     //Dagger hilt

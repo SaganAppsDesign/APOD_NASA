@@ -21,20 +21,10 @@ class APODRepository @Inject constructor(
         return api.getAPODsByCount(query)
     }
 
-
     suspend fun getAPODByDateFromApi(date: String): APOD {
         val response =  api.getAPODsByDate(date)
-        return response?.toDomain() ?: APOD("")
+        return response?.toDomain() ?: APOD("","$date","","","image","No image available fot that date","https://firebasestorage.googleapis.com/v0/b/cumplesdepablo.appspot.com/o/no_image.png?alt=media&token=48335ffd-18bd-4831-b37b-136d3cbf8829","")
     }
-
-//    suspend fun getAPODByDateDataBase(): APOD{
-//        val response = apodDAO.getCurrentApod()
-//        return response.toDomain()
-//    }
-//
-//    suspend fun insertAPODByDateFromDataBase(apod: ApodEntity){
-//        apodDAO.insertCurrentApod(apod)
-//    }
 
     suspend fun getAPODLast30FromApi(startDate: String, endDate: String): List <APOD?>{
         val response = api.getAPODsLast30(startDate, endDate)
@@ -53,15 +43,8 @@ class APODRepository @Inject constructor(
     suspend fun deleteTable(){
         apodDAO.delete()
     }
-    suspend fun EmptyDataBase(): Boolean{
+    suspend fun emptyDataBase(): Boolean{
         return apodDAO.isEmpty()
     }
-
-
-
-
-
-
-
 }
 

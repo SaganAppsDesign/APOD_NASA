@@ -38,6 +38,9 @@ class RandomImageFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentRamdomImageBinding.inflate(inflater, container, false)
+        binding.animationView.isVisible = true
+        binding.animationView.playAnimation()
+        binding.animationView.repeatCount = 10000
 
         val current = "1"
         apodViewModel.getApodByCount(current)

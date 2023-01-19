@@ -49,8 +49,8 @@ class PastImageFragment:Fragment(){
         last50.add(Calendar.DAY_OF_YEAR, -30)
         val lastDay = formatter.format(last50.time)
         val yesterday = formatter.format(last1.time)
+
         loadAPODs(lastDay, yesterday)
-        Log.i("onCreate","onCreate")
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
@@ -88,7 +88,9 @@ class PastImageFragment:Fragment(){
 
         }
         apodViewModel.isLoading.observe(requireActivity()){
-            binding.pbAPOD.isVisible = it
+            binding.animationView.isVisible = it
+            binding.tvLoading.isVisible = it
+            initAnimation()
         }
     }
 
@@ -100,4 +102,7 @@ class PastImageFragment:Fragment(){
         apodMediaType.clear()
     }
 
+    private fun initAnimation(){
+        binding.animationView.playAnimation()
+    }
 }
