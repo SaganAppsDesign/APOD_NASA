@@ -47,6 +47,10 @@ class TodayImageFragment : Fragment() {
         last1.add(Calendar.DAY_OF_YEAR, -1)
         val lastDay = formatter.format(last1.time)
 
+        binding.animationView.isVisible = true
+        binding.animationView.playAnimation()
+        binding.animationView.repeatCount = 100
+
         apodViewModel.getTodayApod(today, lastDay)
         apodViewModel.apodByDateLiveData.observe(viewLifecycleOwner){
             apodImages.addAll(mutableListOf(it?.url))

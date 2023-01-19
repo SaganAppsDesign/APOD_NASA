@@ -23,7 +23,7 @@ class APODRepository @Inject constructor(
 
     suspend fun getAPODByDateFromApi(date: String): APOD {
         val response =  api.getAPODsByDate(date)
-        return response?.toDomain() ?: APOD("")
+        return response?.toDomain() ?: APOD("","$date","","","image","No image available fot that date","https://firebasestorage.googleapis.com/v0/b/cumplesdepablo.appspot.com/o/no_image.png?alt=media&token=48335ffd-18bd-4831-b37b-136d3cbf8829","")
     }
 
     suspend fun getAPODLast30FromApi(startDate: String, endDate: String): List <APOD?>{

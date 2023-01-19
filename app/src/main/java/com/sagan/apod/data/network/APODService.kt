@@ -21,11 +21,7 @@ class APODService @Inject constructor(
     suspend fun getAPODsByDate(date: String): APODModel?{
         return withContext(Dispatchers.IO){
             val response = api.getAPODByDate("apod?api_key=$APOD_API_KEY&date=$date&concept_tags=True&thumbs=True")
-            if(response.isSuccessful){
-                response.body()
-            } else{
-                throw HttpException(response)
-            }
+            response.body()
         }
     }
 

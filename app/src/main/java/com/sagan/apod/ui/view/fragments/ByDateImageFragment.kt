@@ -29,7 +29,7 @@ class ByDateImageFragment : Fragment() {
     private val apodDate = mutableListOf<String?>()
     private val apodMediaType = mutableListOf<String?>()
     private val apodThumbnail = mutableListOf<String?>()
-    var today = "2000-01-01"
+    var today = "1995-06-16"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,7 +41,7 @@ class ByDateImageFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentByDateImageBinding.inflate(inflater, container, false)
-        today = binding.etDatePicker.text.toString()
+        binding.etDatePicker.setText(today)
         initViewModel()
         binding.etDatePicker.setOnClickListener{
             showDatePickerDialog()
@@ -76,7 +76,7 @@ class ByDateImageFragment : Fragment() {
     private fun initViewModel(){
         today = binding.etDatePicker.text.toString()
         apodViewModel.getApodByDate(today)
-        apodViewModel.apodByDateLiveData.observe(viewLifecycleOwner){
+        apodViewModel.apodByDateLiveData.observe(viewLifecycleOwner){ it ->
             removeApodList()
             apodImages.addAll(mutableListOf(it?.url))
             apodTitle.addAll(mutableListOf(it?.title))
@@ -92,34 +92,33 @@ class ByDateImageFragment : Fragment() {
                 binding.bnShare.visibility = View.GONE
                 binding.tvMediaType.visibility = View.GONE
                 binding.bnShare.isEnabled = false
-                binding.pbAPOD.visibility = View.GONE
+                binding.animationView.visibility = View.GONE
 
             } else {
-                binding.tvTitle.text = apodTitle[0]
-                binding.tvDate.text = apodDate[0]
+                    binding.tvTitle.text = apodTitle[0]
+                    binding.tvDate.text = apodDate[0]
 
-                if(apodMediaType[0] == "video"){
-                    Picasso.get().load(apodThumbnail[0]).into(binding.ivApodFragment)
-                } else {
-                    Picasso.get().load(apodImages[0]).into(binding.ivApodFragment)
-                }
-                binding.tvMediaType.text = apodMediaType[0]
+                    if(apodMediaType[0] == "video"){
+                        Picasso.get().load(apodThumbnail[0]).into(binding.ivApodFragment)
+                    } else {
+                        Picasso.get().load(apodImages[0]).into(binding.ivApodFragment)
+                    }
+                    binding.tvMediaType.text = apodMediaType[0]
 
-                binding.ivApodFragment.setOnClickListener(){
-                    passData(apodTitle[0], apodImages[0], apodDescrip[0], apodMediaType[0])
+                    binding.ivApodFragment.setOnClickListener(){
+                        passData(apodTitle[0], apodImages[0], apodDescrip[0], apodMediaType[0])
+                    }
+                    apodViewModel.isLoading.observe(viewLifecycleOwner){
+                        binding.animationView.isVisible = it
+                        initAnimation()
+                    }
+                    binding.bnShare.setOnClickListener {
+                        val shareIntent = Intent(Intent.ACTION_SEND)
+                        shareIntent.type = "text/plain"
+                        shareIntent.putExtra(Intent.EXTRA_TEXT, apodImages[0])
+                        startActivity(Intent.createChooser(shareIntent, "Share APOD"))
+                    }
                 }
-
-                apodViewModel.isLoading.observe(viewLifecycleOwner){
-                    binding.pbAPOD.isVisible = it
-                }
-
-                binding.bnShare.setOnClickListener {
-                    val shareIntent = Intent(Intent.ACTION_SEND)
-                    shareIntent.type = "text/plain"
-                    shareIntent.putExtra(Intent.EXTRA_TEXT, apodImages[0])
-                    startActivity(Intent.createChooser(shareIntent, "Share APOD"))
-                }
-            }
         }
     }
     private fun removeApodList(){
@@ -128,5 +127,9 @@ class ByDateImageFragment : Fragment() {
         apodDescrip.clear()
         apodDate.clear()
         apodMediaType.clear()
+    }
+
+    private fun initAnimation(){
+        binding.animationView.playAnimation()
     }
 }

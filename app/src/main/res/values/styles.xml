@@ -21,7 +21,7 @@
     </style>
 
     <style name="DatePickerTheme" parent="android:Theme.Material.Light.Dialog">
-        <item name="android:colorAccent">#FFA726</item>
+        <item name="android:colorAccent">#FFDCC583</item>
     </style>
 
 </resources>
