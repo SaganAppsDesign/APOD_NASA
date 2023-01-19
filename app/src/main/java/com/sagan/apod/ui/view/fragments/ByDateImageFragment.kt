@@ -41,6 +41,9 @@ class ByDateImageFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentByDateImageBinding.inflate(inflater, container, false)
+        binding.avAstronaut.isVisible = true
+        binding.avAstronaut.playAnimation()
+        binding.avAstronaut.repeatCount = 10000
         binding.etDatePicker.setText(today)
         initViewModel()
         binding.etDatePicker.setOnClickListener{

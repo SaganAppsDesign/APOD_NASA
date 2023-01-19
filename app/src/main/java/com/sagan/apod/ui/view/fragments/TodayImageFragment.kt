@@ -49,7 +49,7 @@ class TodayImageFragment : Fragment() {
 
         binding.animationView.isVisible = true
         binding.animationView.playAnimation()
-        binding.animationView.repeatCount = 100
+        binding.animationView.repeatCount = 10000
 
         apodViewModel.getTodayApod(today, lastDay)
         apodViewModel.apodByDateLiveData.observe(viewLifecycleOwner){
@@ -96,7 +96,6 @@ class TodayImageFragment : Fragment() {
                 }
             }
         }
-
        return binding.root
     }
 
@@ -106,7 +105,6 @@ class TodayImageFragment : Fragment() {
         intent.putExtra("image", image)
         intent.putExtra("description", description)
         intent.putExtra("mediaType", mediaType)
-
         context?.startActivity(intent)
      }
 }

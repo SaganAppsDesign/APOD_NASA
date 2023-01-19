@@ -135,6 +135,18 @@
                 app:lottie_rawRes="@raw/solarsystem"
                 tools:visibility="visible" />
 
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/avAstronaut"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginBottom="8dp"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="@+id/ivApodFragment"
+                app:layout_constraintStart_toStartOf="parent"
+                app:lottie_autoPlay="false"
+                app:lottie_loop="false"
+                app:lottie_rawRes="@raw/astronaut" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
