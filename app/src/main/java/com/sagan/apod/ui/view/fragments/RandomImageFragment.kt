@@ -98,6 +98,7 @@ class RandomImageFragment : Fragment() {
         apodDescrip.clear()
         apodDate.clear()
         apodMediaType.clear()
+        apodThumbnail.clear()
     }
 
     private fun passData (title: String?, image: String?, description: String?, mediaType: String?){

@@ -130,6 +130,7 @@ class ByDateImageFragment : Fragment() {
         apodDescrip.clear()
         apodDate.clear()
         apodMediaType.clear()
+        apodThumbnail.clear()
     }
 
     private fun initAnimation(){

@@ -48,7 +48,6 @@ class APODViewHolder(view: View): RecyclerView.ViewHolder(view) {
         itemView.setOnClickListener {
             passData(tvTitle.text.toString(), image, description, mediaType, context)
         }
-
      }
 
     private fun passData(title: String, image: String?, description: String?, mediaType: String?, context: Context){

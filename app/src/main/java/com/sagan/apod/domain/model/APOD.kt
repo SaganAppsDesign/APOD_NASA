@@ -1,7 +1,5 @@
 package com.sagan.apod.domain.model
 
-import com.google.gson.annotations.Expose
-import com.google.gson.annotations.SerializedName
 import com.sagan.apod.data.databse.entities.ApodEntity
 import com.sagan.apod.data.model.APODModel
 
