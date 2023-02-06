@@ -28,6 +28,7 @@ class RandomImageFragment : Fragment() {
     private val apodDate = mutableListOf<String?>()
     private val apodMediaType = mutableListOf<String?>()
     private val apodThumbnail = mutableListOf<String?>()
+    private val apodCopyright = mutableListOf<String?>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,6 +53,7 @@ class RandomImageFragment : Fragment() {
             apodDate.addAll(mutableListOf(it[0]?.date))
             apodMediaType.addAll(mutableListOf(it[0]?.mediaType))
             apodThumbnail.addAll(mutableListOf(it[0]?.thumbnail_url))
+            apodCopyright.addAll(mutableListOf(it[0]?.copyright))
 
             if (it[0]?.mediaType == "other"){
                 Picasso.get().load(R.drawable.no_image).into(binding.ivApodFragment)
@@ -66,6 +68,12 @@ class RandomImageFragment : Fragment() {
                 binding.tvTitle.text = apodTitle[0]
                 binding.tvDate.text = apodDate[0]
 
+                if(apodCopyright[0].isNullOrEmpty()){
+                    binding.tvCopyright.visibility = View.GONE
+                } else {
+                    binding.tvCopyright.text = "Author: ${apodCopyright[0]}"
+                }
+
                 if(apodMediaType[0] == "video"){
                     Picasso.get().load(apodThumbnail[0]).into(binding.ivApodFragment)
                 } else {
@@ -74,7 +82,7 @@ class RandomImageFragment : Fragment() {
                 binding.tvMediaType.text = apodMediaType[0]
 
                 binding.ivApodFragment.setOnClickListener(){
-                    passData(apodTitle[0], apodImages[0], apodDescrip[0], apodMediaType[0])
+                    passData(apodTitle[0], apodImages[0], apodDescrip[0], apodMediaType[0], apodCopyright[0])
                 }
 
                 apodViewModel.isLoading.observe(viewLifecycleOwner){
@@ -101,13 +109,13 @@ class RandomImageFragment : Fragment() {
         apodThumbnail.clear()
     }
 
-    private fun passData (title: String?, image: String?, description: String?, mediaType: String?){
+    private fun passData (title: String?, image: String?, description: String?, mediaType: String?, copyRight: String?){
         val intent = Intent(context, DetailActivity::class.java)
         intent.putExtra("title", title)
         intent.putExtra("image", image)
         intent.putExtra("description", description)
         intent.putExtra("mediaType", mediaType)
-
+        intent.putExtra("copyRight", copyRight)
         context?.startActivity(intent)
     }
 }

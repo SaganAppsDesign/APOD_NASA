@@ -57,7 +57,7 @@
                 android:scaleType="centerCrop"
                 android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
-                tools:layout_editor_absoluteX="-16dp" />
+                tools:layout_editor_absoluteX="51dp" />
 
             <TextView
                 android:id="@+id/tvTitle"
@@ -84,7 +84,7 @@
                 android:id="@+id/tvDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="24dp"
                 android:background="@drawable/bg_title"
                 android:padding="5dp"
                 android:textColor="@color/white"
@@ -96,12 +96,28 @@
                 tools:textColor="@color/black" />
 
             <TextView
+                android:id="@+id/tvCopyright"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/bg_title"
+                android:padding="8dp"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toTopOf="@+id/pbAPOD"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.495"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvDate"
+                tools:text="fffffffrinting and typesetting industry" />
+
+            <TextView
                 android:id="@+id/tvMediaType"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="19dp"
                 android:background="@drawable/bg_title"
                 android:padding="5dp"
+                android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -127,6 +143,7 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
                 android:background="@drawable/bg_title"
+                android:color="@color/white"
                 android:padding="10dp"
                 android:src="@drawable/ic_baseline_share_24"
                 app:layout_constraintBottom_toBottomOf="parent"

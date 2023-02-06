@@ -29,6 +29,7 @@ class ByDateImageFragment : Fragment() {
     private val apodDate = mutableListOf<String?>()
     private val apodMediaType = mutableListOf<String?>()
     private val apodThumbnail = mutableListOf<String?>()
+    private val apodCopyright = mutableListOf<String?>()
     var today = "1995-06-16"
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -87,7 +88,9 @@ class ByDateImageFragment : Fragment() {
             apodDate.addAll(mutableListOf(it?.date))
             apodMediaType.addAll(mutableListOf(it?.mediaType))
             apodThumbnail.addAll(mutableListOf(it?.thumbnail_url))
-
+            apodCopyright.addAll(mutableListOf(it?.copyright))
+            Log.i("apodCopyright",apodCopyright.toString())
+            Log.i("apodDescrip",apodDescrip.toString())
             if (it?.mediaType == "other"){
                 Picasso.get().load(R.drawable.no_image).into(binding.ivApodFragment)
                 binding.tvTitle.visibility = View.GONE
@@ -106,9 +109,17 @@ class ByDateImageFragment : Fragment() {
                     } else {
                         Picasso.get().load(apodImages[0]).into(binding.ivApodFragment)
                     }
+                    binding.tvCopyright.text = "Author: ${apodCopyright[0]}"
                     binding.tvMediaType.text = apodMediaType[0]
 
-                    binding.ivApodFragment.setOnClickListener(){
+                    Log.i("apodCopyright[1]",apodCopyright[0].toString())
+//                    if(apodCopyright[0].isNullOrEmpty()){
+//                        binding.tvCopyright.visibility = View.GONE
+//                    } else {
+//                        binding.tvCopyright.text = "Author: ${apodCopyright[2]}"
+//                    }
+
+                    binding.ivApodFragment.setOnClickListener{
                         passData(apodTitle[0], apodImages[0], apodDescrip[0], apodMediaType[0])
                     }
                     apodViewModel.isLoading.observe(viewLifecycleOwner){
