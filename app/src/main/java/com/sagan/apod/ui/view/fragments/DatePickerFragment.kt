@@ -4,6 +4,7 @@ import android.app.DatePickerDialog
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.widget.DatePicker
 import androidx.fragment.app.DialogFragment
 import com.sagan.apod.R
@@ -18,16 +19,14 @@ class DatePickerFragment(val listener: (day: Int, month: Int, year: Int) -> Unit
         val year = c.get(Calendar.YEAR)
         val month = c.get(Calendar.MONTH)
         val day = c.get(Calendar.DAY_OF_MONTH)
-        var today = "1995-06-16"
         val picker = DatePickerDialog(activity as Context, R.style.DatePickerTheme, this, year, month, day)
-        c.add(Calendar.YEAR, -27)
-        c.add(Calendar.MONTH, -7)
-        c.add(Calendar.DAY_OF_MONTH, -3)
+        c.set(Calendar.YEAR, 1995)
+        c.set(Calendar.MONTH, Calendar.JUNE)
+        c.set(Calendar.DAY_OF_MONTH, 16)
         picker.datePicker.minDate = c.timeInMillis
-        c.add(Calendar.YEAR, +27)
-        c.add(Calendar.MONTH, +7)
-        c.add(Calendar.DAY_OF_MONTH, +2)
+        c.set(year, month, day - 1)
         picker.datePicker.maxDate = c.timeInMillis
+
         return picker
     }
 }
