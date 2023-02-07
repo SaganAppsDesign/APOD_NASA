@@ -18,6 +18,7 @@ class DatePickerFragment(val listener: (day: Int, month: Int, year: Int) -> Unit
         val year = c.get(Calendar.YEAR)
         val month = c.get(Calendar.MONTH)
         val day = c.get(Calendar.DAY_OF_MONTH)
+        var today = "1995-06-16"
         val picker = DatePickerDialog(activity as Context, R.style.DatePickerTheme, this, year, month, day)
         c.add(Calendar.YEAR, -27)
         c.add(Calendar.MONTH, -7)

@@ -17,6 +17,7 @@ class APODViewHolder(view: View): RecyclerView.ViewHolder(view) {
     private val tvTitle: TextView = view.findViewById(R.id.tvTitle)
     private val tvDate: TextView = view.findViewById(R.id.tvDate)
     private val tvMediaType: TextView = view.findViewById(R.id.tvMediaType)
+    private val tvCopyright: TextView = view.findViewById(R.id.tvCopyright)
     private val share: ImageButton = view.findViewById(R.id.bnShare)
 
     fun bind(
@@ -26,6 +27,7 @@ class APODViewHolder(view: View): RecyclerView.ViewHolder(view) {
         date: String?,
         mediaType: String?,
         thumbnail: String?,
+        copyright: String?,
         context: Context){
 
         if (mediaType == "video"){
@@ -38,17 +40,22 @@ class APODViewHolder(view: View): RecyclerView.ViewHolder(view) {
         tvDate.text = date
         tvMediaType.text = mediaType
 
+        if(copyright.isNullOrEmpty()){
+            tvCopyright.text = "Author: No author info available"
+        } else {
+            tvCopyright.text = "Author: $copyright"
+        }
+
         share.setOnClickListener{
             val shareIntent = Intent(Intent.ACTION_SEND)
             shareIntent.type = "text/plain"
-            shareIntent.putExtra(Intent.EXTRA_TEXT, image)
+            shareIntent.putExtra(Intent.EXTRA_TEXT, "$title -> $image")
             context.startActivity(Intent.createChooser(shareIntent, "Share APOD"))
         }
 
         itemView.setOnClickListener {
             passData(tvTitle.text.toString(), image, description, mediaType, context)
         }
-
      }
 
     private fun passData(title: String, image: String?, description: String?, mediaType: String?, context: Context){

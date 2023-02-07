@@ -79,6 +79,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="150dp"
+                android:textIsSelectable="true"
                 android:background="@drawable/bg_title"
                 android:fontFamily="@font/monserrat_alternates"
                 android:gravity="center|center_horizontal"
