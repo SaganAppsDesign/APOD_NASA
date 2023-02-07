@@ -3,6 +3,7 @@ package com.sagan.apod.ui.view.fragments
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -61,6 +62,8 @@ class TodayImageFragment : Fragment() {
             apodMediaType.addAll(mutableListOf(it?.mediaType))
             apodThumbnail.addAll(mutableListOf(it?.thumbnail_url))
             apodCopyright.addAll(mutableListOf(it?.copyright))
+            Log.i("apodCopyright",apodCopyright.toString())
+            Log.i("apodDescrip",apodDescrip.toString())
 
             if (it?.mediaType == "other"){
                 Picasso.get().load(R.drawable.no_image).into(binding.ivApodFragment)
@@ -83,7 +86,7 @@ class TodayImageFragment : Fragment() {
                 binding.tvMediaType.text = apodMediaType[0]
 
                 if(apodCopyright[0].isNullOrEmpty()){
-                    binding.tvCopyright.visibility = View.GONE
+                    binding.tvCopyright.text = "Author: No author info available"
                 } else {
                     binding.tvCopyright.text = "Author: ${apodCopyright[0]}"
                 }

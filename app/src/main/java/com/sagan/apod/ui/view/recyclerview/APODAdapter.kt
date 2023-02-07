@@ -12,7 +12,8 @@ class APODAdapter(private val context: Context,
                   private val description: MutableList<String?>,
                   private val date: MutableList<String?>,
                   private val mediaType: MutableList<String?>,
-                  private val thumbnail: MutableList<String?>)
+                  private val thumbnail: MutableList<String?>,
+                  private val copyright: MutableList<String?>)
     : RecyclerView.Adapter<APODViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): APODViewHolder {
@@ -27,8 +28,9 @@ class APODAdapter(private val context: Context,
         val date = date[position]
         val mediaType = mediaType[position]
         val thumbnail = thumbnail[position]
+        val copyright = copyright[position]
         if(mediaType != "other"){
-            holder.bind(image, title, description, date, mediaType, thumbnail, context)
+            holder.bind(image, title, description, date, mediaType, thumbnail, copyright, context)
         }
       }
 

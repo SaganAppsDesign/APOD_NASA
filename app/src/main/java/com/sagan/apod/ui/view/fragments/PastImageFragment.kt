@@ -38,6 +38,7 @@ class PastImageFragment:Fragment(){
     private val apodDate = mutableListOf<String?>()
     private val apodMediaType = mutableListOf<String?>()
     private val apodThumbnail = mutableListOf<String?>()
+    private val apodCopyright = mutableListOf<String?>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,7 +68,7 @@ class PastImageFragment:Fragment(){
     }
 
     private fun initRecycler(){
-        adapter = APODAdapter(requireActivity(), apodImages, apodTitle, apodDescrip, apodDate, apodMediaType, apodThumbnail)
+        adapter = APODAdapter(requireActivity(), apodImages, apodTitle, apodDescrip, apodDate, apodMediaType, apodThumbnail, apodCopyright)
         binding.rvAPODs.layoutManager = LinearLayoutManager (requireActivity())
         binding.rvAPODs.adapter = adapter
     }
@@ -83,6 +84,7 @@ class PastImageFragment:Fragment(){
                 apodDate.addAll(mutableListOf(it[i]?.date))
                 apodMediaType.addAll(mutableListOf(it[i]?.mediaType))
                 apodThumbnail.addAll(mutableListOf(it[i]?.thumbnail_url))
+                apodCopyright.addAll(mutableListOf(it[i]?.copyright))
             }
             adapter.notifyDataSetChanged()
 
@@ -100,6 +102,7 @@ class PastImageFragment:Fragment(){
         apodDescrip.clear()
         apodDate.clear()
         apodMediaType.clear()
+        apodCopyright.clear()
     }
 
     private fun initAnimation(){

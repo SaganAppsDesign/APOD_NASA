@@ -69,7 +69,7 @@ class RandomImageFragment : Fragment() {
                 binding.tvDate.text = apodDate[0]
 
                 if(apodCopyright[0].isNullOrEmpty()){
-                    binding.tvCopyright.visibility = View.GONE
+                    binding.tvCopyright.text = "Author: No author info available"
                 } else {
                     binding.tvCopyright.text = "Author: ${apodCopyright[0]}"
                 }
